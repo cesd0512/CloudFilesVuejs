@@ -24,7 +24,7 @@
                     <v-list-item
                         v-for="(item, i) in itemsRight"
                         :key="i"
-                        :to="item.to"
+                        @click="logout()"
                         link
                         >
                         <v-list-item-content>
@@ -86,9 +86,16 @@ export default {
         }
     },
     computed: {
+        isLoggedIn: function() {
+            return this.$store.getters.isAuthenticated;
+        },
     },
 
     methods: {
+        async logout() {
+            await this.$store.dispatch("LogOut");
+            this.$router.push("/login");
+        },
     },
 };
 </script>

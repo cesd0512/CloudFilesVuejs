@@ -21,84 +21,11 @@
       >
         <v-tab>Login</v-tab>
         <v-tab>Registro</v-tab>
-        <v-tab-item
-          v-for="n in 3"
-          :key="n"
-        >
-          <v-container fluid>
-            <div style="padding-top: 5%"></div>
-            <v-row no-gutters>
-              <v-col
-                  cols="12"
-                  sm="6"
-
-                >
-              </v-col>
-              <v-col
-                  cols="12"
-                  sm="6"
-              >
-                <v-divider ></v-divider><br/>
-                <h2 style="color: #424242;">Inicie Sesión</h2>
-                <v-form
-                  ref="form"
-                  v-model="valid"
-                  lazy-validation
-                >
-                  <v-text-field
-                    v-model="user"
-                    :counter="10"
-                    :rules="nameRules"
-                    label="User"
-                    required
-                  ></v-text-field>
-
-                  <v-text-field
-                    v-model="password"
-                    :rules="emailRules"
-                    label="Password"
-                    type="password"
-                    required
-                  ></v-text-field>
-
-                  <v-row no-gutters>
-                    <v-col
-                        cols="12"
-                        sm="6"
-                      >
-                        <v-checkbox
-                        v-model="recovery"
-                        label="Recordarme"
-                        required
-                        ></v-checkbox>
-                    </v-col>
-                    <v-col
-                      cols="12"
-                      sm="6"
-                    >
-                      <v-btn
-                        class="ma-2"
-                        :loading="loading4"
-                        :disabled="loading4"
-                        color="indigo"
-                        dark
-                        @click="loader = 'loading4'"
-                        to="/"
-                      >
-                      Inicia Sesión
-                      <template v-slot:loader>
-                        <span class="custom-loader">
-                          <v-icon light>mdi-cached</v-icon>
-                        </span>
-                      </template>
-                      </v-btn>
-                    </v-col>
-                  </v-row>
-                </v-form>
-                <v-divider ></v-divider>
-              </v-col>
-            </v-row>
-          </v-container>
+        <v-tab-item>
+          <Login></Login>
+        </v-tab-item>
+        <v-tab-item>
+          <Register></Register>
         </v-tab-item>
       </v-tabs>
     </div>
@@ -106,46 +33,17 @@
 </template>
 
 <script>
-import Banner from '@/components/Banner.vue'
+  import Login from '@/components/Login.vue'
+  import Register from '@/components/Register.vue'
 
   export default {
-    data: () => ({
-      valid: true,
-      user: '',
-      userRules: [
-        v => !!v || 'Name is required',
-        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
-      ],
-      password: '',
-      passwordRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-      ],
-      
-      recovery: false,
-    }),
-
     components: {
-      Banner
+      Login,
+      Register,
     },
 
-    methods: {
-      validate () {
-        this.$refs.form.validate()
-      },
-      reset () {
-        this.$refs.form.reset()
-      },
-      resetValidation () {
-        this.$refs.form.resetValidation()
-      },
-    },
-  }
+    data: () => ({
+      //
+    }),
+  };
 </script>
-
-<style>
-  .main {
-    align-self: center;
-  }
-
-</style>

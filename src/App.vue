@@ -1,6 +1,10 @@
 <template>
   <v-app>
+  <div v-if="session">
     <Dash app></Dash> 
+  </div>
+  <div v-else>
+  </div>
 
   <!-- Sizes your content based upon application components -->
     <v-main>
@@ -30,6 +34,7 @@
 <script>
 import Dash from './components/Dash';
 import Login from './views/Login';
+import store from "./store";
 
 export default {
   name: 'App',
@@ -40,7 +45,16 @@ export default {
   },
 
   data: () => ({
-    //
+    sessionAuthenticated: false,
   }),
+
+  computed: {
+    session () {
+      console.log(store.getters.isAuthenticated);
+      this.sessionAuthenticated = store.getters.isAuthenticated;
+      return this.sessionAuthenticated;
+    }
+      
+  },
 };
 </script>

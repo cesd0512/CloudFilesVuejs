@@ -9,7 +9,7 @@ export default {
     { title: 'Conexión API', icon: 'mdi-access-point' },
   ],
   itemsRight: [
-    { title: 'Cerrar Sesión', icon: 'mdi-share-outline', to: '/login'}
+    { title: 'Cerrar Sesión', icon: 'mdi-share-outline'}
   ]
 
 
