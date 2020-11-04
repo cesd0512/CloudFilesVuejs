@@ -4,7 +4,7 @@
             <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
             <v-spacer></v-spacer>
-            <b class="userName">Camilo Sarmiento</b>
+            <b class="userName">{{ userName }}</b>
             <v-list-item-avatar>
             <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
             </v-list-item-avatar>
@@ -83,12 +83,21 @@ export default {
             items: menuData['itemsDrawer'],
             itemsRight: menuData['itemsRight'],
             selected: 0,
+            user: '',
         }
     },
     computed: {
         isLoggedIn: function() {
             return this.$store.getters.isAuthenticated;
         },
+        userName(){
+            this.user = this.$store.getters.stateUser;
+            var fullName = '';
+            if (this.user){
+                fullName = this.user.first_name + ' ' + this.user.last_name;
+            }
+            return fullName;
+        }
     },
 
     methods: {

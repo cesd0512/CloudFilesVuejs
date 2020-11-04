@@ -37,18 +37,16 @@ const router = new VueRouter({
   routes
 })
 
-var session = 0;
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (store.getters.isAuthenticated) {
       next();
-      session += 1;
       return;
     }
     next('/login');
   } else {
-    if (store.getters.isAuthenticated && session != 0) {
-      next(from.path);
+    if (store.getters.isAuthenticated) {
+      next('/');
       return;
     }
     next();

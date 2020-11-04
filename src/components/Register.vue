@@ -71,7 +71,7 @@
               </v-btn>
           </v-row>
         </v-form>
-        <p v-if="showError" id="error">{{message}}</p>
+        <p v-if="message != null" id="error">{{message}}</p>
         <v-divider ></v-divider>
       </v-col>
     </v-row>
@@ -87,8 +87,7 @@ import { mapActions } from "vuex";
 
     data: () => ({
       valid: true,
-      showError: false,
-      message: '',
+      message: null,
       form: {
         username: '',
         password: '',
@@ -106,13 +105,24 @@ import { mapActions } from "vuex";
     methods: {
       ...mapActions(["Register"]),
       async submit() {
-        try {
-          await this.Register(this.form);
-          this.$router.push("/login");
-          this.showError = false
-        } catch (error) {
-          this.showError = true
+        console.log('11111');
+        if (this.password != this.password2){
+          console.log('error');
+          this.message = 'Error al registrar usuario';
+        } else {
+          try {
+            let res = await this.Register(this.form);
+            if (res){
+              this.message = 'Registro Existoso !!';
+              // this.$router.push("/login");
+            }
+          } catch (error) {
+            console.log(error);
+            this.message = 'Error al registrar usuario'
+          }
+
         }
+        
       },
     }
   }
