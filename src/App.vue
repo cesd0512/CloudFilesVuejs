@@ -50,7 +50,6 @@ export default {
 
   computed: {
     session () {
-      console.log(store.getters.isAuthenticated);
       this.sessionAuthenticated = store.getters.isAuthenticated;
       return this.sessionAuthenticated;
     }

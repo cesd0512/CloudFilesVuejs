@@ -1,34 +1,39 @@
 <template>
   <div class="main">
-    <v-row
-      align="center"
-      justify="center"
-    >
-      <v-icon
-        color="indigo darken-2"
-        large
-        left
-      >
-        mdi-cloud-sync
-      </v-icon>
-      <h1 style="color: #424242; padding: 20px">Cloud4Files</h1>
-    </v-row>
-    <v-divider></v-divider>
-    <div class="main">
-      <v-tabs
-        color="deep-purple accent-4"
-        right
-      >
-        <v-tab>Login</v-tab>
-        <v-tab>Registro</v-tab>
-        <v-tab-item>
-          <Login></Login>
-        </v-tab-item>
-        <v-tab-item>
-          <Register></Register>
-        </v-tab-item>
-      </v-tabs>
-    </div>
+      <v-row >
+        <v-col
+          cols="12"
+          md="6"
+          sm="6"
+          xs="6"  >
+          <v-spacer></v-spacer>
+          <v-divider vertical></v-divider>
+        </v-col>
+        <v-col
+          cols="12"
+          md="6"
+          sm="6"
+          xs="6" >
+          <v-card
+            class="mx-auto"
+            max-width="500" >
+            <div style="padding: 5%">
+              <v-tabs
+                color="deep-purple accent-4"
+                right >
+                <v-tab>Login</v-tab>
+                <v-tab>Registro</v-tab>
+                <v-tab-item>
+                    <Login></Login>
+                </v-tab-item>
+                <v-tab-item>
+                  <Register></Register>
+                </v-tab-item>
+              </v-tabs>
+            </div>
+          </v-card>
+        </v-col>
+      </v-row>
   </div>
 </template>
 
@@ -47,3 +52,13 @@
     }),
   };
 </script>
+
+
+<style>
+  .main {
+    align-self: center;
+    padding:5%;
+    margin: 15px
+  }
+
+</style>

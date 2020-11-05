@@ -1,79 +1,57 @@
 <template>
-  <v-container fluid>
-    <div style="padding-top: 5%">
-    </div>
-    <v-row no-gutters>
-        <v-col
+  <v-container>
+    <h2 style="color: #424242;">Inicie Sesión</h2>
+    <v-form
+      ref="form"
+      v-model="valid"
+      lazy-validation >
+        <v-text-field
+          v-model="form.username"
+          label="User"
+          required
+        ></v-text-field>
+
+        <v-text-field
+          v-model="form.password"
+          label="Password"
+          type="password"
+          required
+        ></v-text-field>
+
+        <v-row no-gutters>
+          <v-col
+              cols="12"
+              sm="6"
+              >
+              <v-checkbox
+              v-model="recovery"
+              label="Recordarme"
+              required
+              ></v-checkbox>
+          </v-col>
+          <v-col
             cols="12"
-            sm="6"
-
-        >
-        </v-col>
-        <v-col
-            cols="12"
-            sm="6"
-        >
-            <v-divider ></v-divider><br/>
-            <h2 style="color: #424242;">Inicie Sesión</h2>
-            <v-form
-                ref="form"
-                v-model="valid"
-                lazy-validation
-            >
-                <v-text-field
-                v-model="form.username"
-                label="User"
-                required
-                ></v-text-field>
-
-                <v-text-field
-                v-model="form.password"
-                label="Password"
-                type="password"
-                required
-                ></v-text-field>
-
-                <v-row no-gutters>
-                    <v-col
-                        cols="12"
-                        sm="6"
-                        >
-                        <v-checkbox
-                        v-model="recovery"
-                        label="Recordarme"
-                        required
-                        ></v-checkbox>
-                    </v-col>
-                    <v-col
-                        cols="12"
-                        sm="6"
-                    >
-                        <v-btn
-                        class="ma-2"
-                        color="indigo"
-                        dark
-                        @click="submit()"
-                        >
-                        Inicia Sesión
-                        <template v-slot:loader>
-                        <span class="custom-loader">
-                            <v-icon light>mdi-cached</v-icon>
-                        </span>
-                        </template>
-                        </v-btn>
-                    </v-col>
-                </v-row>
-            </v-form>
-            <p v-if="showError" id="error">Username or Password is incorrect</p>
-            <v-divider ></v-divider>
-        </v-col>
-    </v-row>
-    </v-container>
+            sm="6" >
+            <v-btn
+              class="ma-2"
+              color="indigo"
+              dark
+              @click="submit()" > Inicia Sesión
+              <template v-slot:loader>
+              <span class="custom-loader">
+                  <v-icon light>mdi-cached</v-icon>
+              </span>
+              </template>
+            </v-btn>
+          </v-col>
+        </v-row>
+    </v-form>
+    <p v-if="showError" id="error">Username or Password is incorrect</p>
+  </v-container>
 </template>
 
 <script>
 import { mapActions } from "vuex";
-// import Banner from '@/components/Banner.vue'
 
   export default {
     name: 'Login',
