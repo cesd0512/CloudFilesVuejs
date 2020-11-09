@@ -2,11 +2,13 @@ import axios from "axios";
 
 const state = {
   user: null,
+  color: '#DCE8F0'
 };
 
 const getters = {
   isAuthenticated: (state) => !!state.user,
   stateUser: (state) => state.user,
+  color: (state) => state.color,
 };
 
 const actions = {

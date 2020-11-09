@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h2 style="color: #424242;">Registrarse</h2>
+    <h2 style="color: #6A6E71;">Registrarse</h2>
     <v-form
       ref="form"
       v-model="valid"
@@ -44,8 +44,10 @@
         ></v-text-field>
         <v-row class="d-flex justify-center">
           <v-btn
-            class="ma-2"
-            color="indigo"
+            class="ma-2 rounded-xl"
+            color="other"
+            block
+            hover
             dark
             @click="submit()"
             >

@@ -1,6 +1,17 @@
 <template>
-  <v-container>
-    <h2 style="color: #424242;">Inicie Sesión</h2>
+  <v-container >
+    <v-col
+      cols="12"
+      sm="12"
+      align="center"
+      justify="center"
+      >
+      <v-img
+          src="user.png"
+          max-height="500"
+          max-width="140"
+        ></v-img>
+      </v-col>
     <v-form
       ref="form"
       v-model="valid"
@@ -21,7 +32,7 @@
         <v-row no-gutters>
           <v-col
               cols="12"
-              sm="6"
+              sm="12"
               >
               <v-checkbox
               v-model="recovery"
@@ -31,10 +42,15 @@
           </v-col>
           <v-col
             cols="12"
-            sm="6" >
+            sm="12"
+            align="center"
+            justify="center"
+            >
             <v-btn
-              class="ma-2"
-              color="indigo"
+              class="ma-2 rounded-xl"
+              color="other"
+              block
+              hover
               dark
               @click="submit()" > Inicia Sesión
               <template v-slot:loader>

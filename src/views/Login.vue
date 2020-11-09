@@ -1,25 +1,40 @@
 <template>
   <div class="main">
-      <v-row >
+      <v-row
+      align="center"
+      justify="center"
+    >
+      <v-img
+        src="logo.png"
+        max-height="100"
+        max-width="40"
+      ></v-img>
+      <h1 class="font-title">Cloud4files</h1>
+    </v-row>
+      <v-divider></v-divider>
+      <v-row 
+      align="center"
+      justify="center">
         <v-col
+          v-if="look"
           cols="12"
-          md="6"
           sm="6"
-          xs="6"  >
-          <v-spacer></v-spacer>
-          <v-divider vertical></v-divider>
+        >
+          <v-img
+            src="cloud2.png"
+          ></v-img>
         </v-col>
         <v-col
           cols="12"
           md="6"
           sm="6"
-          xs="6" >
-          <v-card
-            class="mx-auto"
-            max-width="500" >
-            <div style="padding: 5%">
+          xs="6"
+          >
+          <v-container 
+          >
+            <div style="max-width: 500px">
               <v-tabs
-                color="deep-purple accent-4"
+                color="other"
                 right >
                 <v-tab>Login</v-tab>
                 <v-tab>Registro</v-tab>
@@ -31,7 +46,7 @@
                 </v-tab-item>
               </v-tabs>
             </div>
-          </v-card>
+          </v-container>
         </v-col>
       </v-row>
   </div>
@@ -50,6 +65,17 @@
     data: () => ({
       //
     }),
+    computed: {
+      look () {
+        var look_image = true;
+        if (screen.width <= 680 ){
+          look_image = false;
+        }
+        console.log('---->', screen.height, screen.width);
+        return look_image;
+      },
+      
+    },
   };
 </script>
 
@@ -57,8 +83,13 @@
 <style>
   .main {
     align-self: center;
-    padding:5%;
-    margin: 15px
+    padding-bottom:10%;
   }
-
+  .font-title {
+    color: #2D353D; 
+    padding: 20px; 
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 280%;
+  }
 </style>
+
