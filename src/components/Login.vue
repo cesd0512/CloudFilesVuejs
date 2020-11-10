@@ -9,9 +9,9 @@
       <v-img
           src="user.png"
           max-height="500"
-          max-width="140"
+          max-width="125"
         ></v-img>
-      </v-col>
+    </v-col>
     <v-form
       ref="form"
       v-model="valid"
@@ -47,8 +47,8 @@
             justify="center"
             >
             <v-btn
-              class="ma-2 rounded-xl"
-              color="other"
+              class="ma-2 rounded-lg"
+              color="indigo"
               block
               hover
               dark

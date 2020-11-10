@@ -1,17 +1,5 @@
 <template>
   <div class="main">
-      <v-row
-      align="center"
-      justify="center"
-    >
-      <v-img
-        src="logo.png"
-        max-height="100"
-        max-width="40"
-      ></v-img>
-      <h1 class="font-title">Cloud4files</h1>
-    </v-row>
-      <v-divider></v-divider>
       <v-row 
       align="center"
       justify="center">
@@ -20,8 +8,9 @@
           cols="12"
           sm="6"
         >
-          <v-img
+          <v-img style="margin-left: 25%; margin-right: 5%;"
             src="cloud2.png"
+            max-width="550"
           ></v-img>
         </v-col>
         <v-col
@@ -32,7 +21,7 @@
           >
           <v-container 
           >
-            <div style="max-width: 500px">
+            <div style="max-width: 500px; padding:10%">
               <v-tabs
                 color="other"
                 right >
@@ -85,11 +74,6 @@
     align-self: center;
     padding-bottom:10%;
   }
-  .font-title {
-    color: #2D353D; 
-    padding: 20px; 
-    font-family: 'Archivo Black', sans-serif;
-    font-size: 280%;
-  }
+  
 </style>
 
