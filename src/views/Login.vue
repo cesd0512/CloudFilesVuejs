@@ -10,7 +10,7 @@
         >
           <v-img style="margin-left: 25%; margin-right: 5%;"
             src="cloud2.png"
-            max-width="550"
+            max-width="500"
           ></v-img>
         </v-col>
         <v-col
