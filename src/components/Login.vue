@@ -6,11 +6,11 @@
       align="center"
       justify="center"
       >
-      <v-img
-          src="user.png"
+      <!--<v-img
+          src="contrasena.png"
           max-height="500"
           max-width="125"
-        ></v-img>
+        ></v-img>-->
     </v-col>
     <v-form
       ref="form"
@@ -46,6 +46,23 @@
             align="center"
             justify="center"
             >
+            <v-alert 
+              :value="showError"
+              type="error" 
+              dense
+              color="pink"
+              outlined>
+              Usuario o contraseña incorrectos.
+            </v-alert>
+
+
+          </v-col>
+          <v-col
+            cols="12"
+            sm="12"
+            align="center"
+            justify="center"
+            >
             <v-btn
               class="ma-2 rounded-lg"
               color="indigo"
@@ -62,7 +79,6 @@
           </v-col>
         </v-row>
     </v-form>
-    <p v-if="showError" id="error">Username or Password is incorrect</p>
   </v-container>
 </template>
 

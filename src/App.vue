@@ -1,15 +1,15 @@
 <template>
-  <v-app >
+  <v-app style="background-color:#F6F8F9">
   <div v-if="session">
     <Dash app></Dash> 
   </div>
-  <div style="margin-left:12%; margin-right:12%" v-else>
+  <div style="margin-left:12%; margin-right:12%;" v-else>
   <v-row
       align="center"
       justify="center"
     >
       <v-img
-        src="logo.png"
+        src="computacion-en-la-nube.png"
         max-height="100"
         max-width="50"
       ></v-img>
@@ -19,7 +19,7 @@
   </div>
 
   <!-- Sizes your content based upon application components -->
-    <v-main >
+    <v-main style="background-color:#F6F8F9">
 
       <!-- Provides the application the proper gutter -->
       <v-container fluid>

@@ -1,16 +1,14 @@
 <template>
   <div class="main">
-      <v-row 
-      align="center"
-      justify="center">
+      <v-row >
         <v-col
-          v-if="look"
           cols="12"
           sm="6"
+          class="hidden"
         >
-          <v-img style="margin-left: 25%; margin-right: 5%;"
+          <v-img style="margin-left: 15%; margin-right: 15%;"
             src="cloud2.png"
-            max-width="500"
+            max-width="550"
           ></v-img>
         </v-col>
         <v-col
@@ -19,11 +17,13 @@
           sm="6"
           xs="6"
           >
-          <v-container 
-          >
+          <v-card
+            class="mx-auto rounded-xl"
+            hover
+            max-width="500" >
             <div style="max-width: 500px; padding:10%">
               <v-tabs
-                color="other"
+                color="indigo"
                 right >
                 <v-tab>Login</v-tab>
                 <v-tab>Registro</v-tab>
@@ -35,7 +35,7 @@
                 </v-tab-item>
               </v-tabs>
             </div>
-          </v-container>
+          </v-card>
         </v-col>
       </v-row>
   </div>
@@ -55,14 +55,6 @@
       //
     }),
     computed: {
-      look () {
-        var look_image = true;
-        if (screen.width <= 680 ){
-          look_image = false;
-        }
-        console.log('---->', screen.height, screen.width);
-        return look_image;
-      },
       
     },
   };
@@ -72,7 +64,14 @@
 <style>
   .main {
     align-self: center;
-    padding-bottom:10%;
+    margin-top: 3%;
+    margin-left: 10%;
+    margin-right: 10%
+  }
+  @media screen and (max-width: 600px) {
+    .hidden{
+      display:none;
+    }
   }
   
 </style>
