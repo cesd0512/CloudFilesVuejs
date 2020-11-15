@@ -1,30 +1,14 @@
 <template>
   <v-app style="background-color:#F6F8F9">
-  <div v-if="session">
-    <Dash app></Dash> 
-  </div>
-  <div style="margin-left:12%; margin-right:12%;" v-else>
-  <v-row
-      align="center"
-      justify="center"
-    >
-      <v-img
-        src="computacion-en-la-nube.png"
-        max-height="100"
-        max-width="50"
-      ></v-img>
-      <h1 class="font-title">Cloud4files</h1>
-    </v-row>
-      <v-divider height="120"></v-divider>
-  </div>
+    <div v-if="session">
+      <Dash app></Dash> 
+    </div>
+    <div style="margin-left:12%; margin-right:12%;" v-else>
+      <Title app :title="'Cloud4Files'" :image="'logo.png'"></Title>
+    </div>
 
-  <!-- Sizes your content based upon application components -->
     <v-main style="background-color:#F6F8F9">
-
-      <!-- Provides the application the proper gutter -->
       <v-container fluid>
-
-        <!-- If using vue-router -->
         <router-view></router-view>
       </v-container>
     </v-main>
@@ -46,6 +30,7 @@
 <script>
 
 import Dash from './components/Dash';
+import Title from './components/Title';
 import Login from './views/Login';
 import store from "./store";
 
@@ -55,19 +40,16 @@ export default {
   components: {
     Dash,
     Login,
+    Title,
   },
 
   data: () => ({
     sessionAuthenticated: false,
-    class_main: "color-fond",
   }),
 
   computed: {
     session () {
       this.sessionAuthenticated = store.getters.isAuthenticated;
-      // if (!this.sessionAuthenticated ){
-      //   this.class_main = "image-fond";
-      // }
       return this.sessionAuthenticated;
     },
       
@@ -77,10 +59,10 @@ export default {
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
-  .font-title {
-    color: #2D353D; 
-    padding: 10px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 200%;
+  @media screen and (max-width: 600px) {
+    .hidden{
+      display:none;
+    }
   }
+  
 </style>

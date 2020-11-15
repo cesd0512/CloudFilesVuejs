@@ -20,6 +20,7 @@
           v-model="form.username"
           label="User"
           required
+           @keyup.enter="submit()"
         ></v-text-field>
 
         <v-text-field
@@ -27,6 +28,7 @@
           label="Password"
           type="password"
           required
+          @keyup.enter="submit()"
         ></v-text-field>
 
         <v-row no-gutters>
@@ -65,7 +67,7 @@
             >
             <v-btn
               class="ma-2 rounded-lg"
-              color="indigo"
+              color="primary"
               block
               hover
               dark

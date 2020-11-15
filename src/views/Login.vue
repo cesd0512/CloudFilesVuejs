@@ -8,7 +8,7 @@
         >
           <v-img style="margin-left: 15%; margin-right: 15%;"
             src="cloud2.png"
-            max-width="550"
+            max-width="600"
           ></v-img>
         </v-col>
         <v-col
@@ -23,7 +23,7 @@
             max-width="500" >
             <div style="max-width: 500px; padding:10%">
               <v-tabs
-                color="indigo"
+                color="secondary"
                 right >
                 <v-tab>Login</v-tab>
                 <v-tab>Registro</v-tab>
@@ -67,11 +67,6 @@
     margin-top: 3%;
     margin-left: 10%;
     margin-right: 10%
-  }
-  @media screen and (max-width: 600px) {
-    .hidden{
-      display:none;
-    }
   }
   
 </style>

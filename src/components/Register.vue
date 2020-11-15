@@ -43,9 +43,17 @@
           required
         ></v-text-field>
         <v-row class="d-flex justify-center">
+          <v-alert 
+            :value="message"
+            type="error" 
+            dense
+            color="pink"
+            outlined>
+            {{message}}
+          </v-alert>
           <v-btn
             class="ma-2 rounded-lg"
-            color="indigo"
+            color="primary"
             block
             hover
             dark
@@ -60,7 +68,6 @@
           </v-btn>
         </v-row>
     </v-form>
-    <p v-if="message != null" id="error">{{message}}</p>
   </v-container>
 </template>
 
@@ -93,7 +100,7 @@ import { mapActions } from "vuex";
       async submit() {
         if (this.form.password != this.form.password2){
           console.log('error');
-          this.message = 'Error!! Las contraseñas no coinciden';
+          this.message = '¡Error! Las contraseñas no coinciden';
         } else {
           try {
             let res = await this.Register(this.form);
