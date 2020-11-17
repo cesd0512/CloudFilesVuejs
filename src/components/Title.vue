@@ -11,7 +11,7 @@
       ></v-img>
       <h1 class="font-title">{{title}}</h1>
     </v-row>
-    <v-divider></v-divider>
+    <!--<v-divider></v-divider>-->
   </v-container>
 </template>
 

@@ -6,11 +6,6 @@
       align="center"
       justify="center"
       >
-      <!--<v-img
-          src="contrasena.png"
-          max-height="500"
-          max-width="125"
-        ></v-img>-->
     </v-col>
     <v-form
       ref="form"
@@ -18,14 +13,14 @@
       lazy-validation >
         <v-text-field
           v-model="form.username"
-          label="User"
+          :label="$t('user')"
           required
-           @keyup.enter="submit()"
+          @keyup.enter="submit()"
         ></v-text-field>
 
         <v-text-field
           v-model="form.password"
-          label="Password"
+          :label="$t('password')"
           type="password"
           required
           @keyup.enter="submit()"
@@ -38,27 +33,11 @@
               >
               <v-checkbox
               v-model="recovery"
-              label="Recordarme"
+              :label="$t('recovery')"
               required
               ></v-checkbox>
           </v-col>
-          <v-col
-            cols="12"
-            sm="12"
-            align="center"
-            justify="center"
-            >
-            <v-alert 
-              :value="showError"
-              type="error" 
-              dense
-              color="pink"
-              outlined>
-              Usuario o contraseña incorrectos.
-            </v-alert>
-
-
-          </v-col>
+          <Alert :message="message" :color="'pink'" :type="'error'"></Alert>
           <v-col
             cols="12"
             sm="12"
@@ -71,13 +50,14 @@
               block
               hover
               dark
-              @click="submit()" > Inicia Sesión
-              <template v-slot:loader>
-              <span class="custom-loader">
-                  <v-icon light>mdi-cached</v-icon>
-              </span>
-              </template>
+              @click="submit()" > {{ $t('init_sesion')}}
             </v-btn>
+          </v-col>
+          <v-col
+            cols="12"
+            sm="12"
+            >
+            <router-link class="forgot-password-link" to="/password-reset">¿{{ $t('recovery_password')}}?</router-link>
           </v-col>
         </v-row>
     </v-form>
@@ -86,21 +66,23 @@
 
 <script>
 import { mapActions } from "vuex";
+import Alert from '@/components/Alert';
 
   export default {
     name: 'Login',
 
     data: () => ({
         recovery: false,
-        showError: false,
         valid: true,
         form: {
             username: '',
             password: '',
         },
+        message: null
     }),
 
     components: {
+      Alert
       // Banner
     },
 
@@ -114,21 +96,13 @@ import { mapActions } from "vuex";
             let res = await this.LogIn(User);
             if (res){
                 this.$router.push("/");
-                this.showError = false
             }else{
-                this.showError = true
+                this.message = 'error_session_start'
             }
         } catch (error) {
-          this.showError = true
+          this.message = 'error_connection'
         }
       },
     }
   }
 </script>
-
-<style>
-  .main {
-    align-self: center;
-  }
-
-</style>

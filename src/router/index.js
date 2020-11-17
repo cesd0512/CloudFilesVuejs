@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import PasswordReset from '../views/PasswordReset.vue'
 import store from "../store";
 
 Vue.use(VueRouter)
@@ -28,6 +29,11 @@ const routes = [
     name: 'Files',
     component: () => import('../views/Files.vue'),
     meta: { requiresAuth: true },
+  },
+  {
+    path: '/password-reset',
+    name: 'PasswordReset',
+    component: PasswordReset
   }
 ]
 

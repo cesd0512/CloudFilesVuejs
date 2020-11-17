@@ -10,6 +10,8 @@ import '@mdi/font/css/materialdesignicons.css'
 // import axios
 import axios from "axios";
 
+import i18n from './i18n'
+
 // axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://127.0.0.1:8000/";
 
@@ -32,5 +34,6 @@ new Vue({
   router,
   store,
   vuetify,
+  i18n,
   render: h => h(App)
 }).$mount('#app')

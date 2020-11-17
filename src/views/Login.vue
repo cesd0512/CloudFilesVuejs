@@ -7,7 +7,7 @@
           class="hidden"
         >
           <v-img style="margin-left: 15%; margin-right: 15%;"
-            src="cloud2.png"
+            src="https://res.cloudinary.com/cloud4files/image/upload/v1605574425/cloud2_porosn.png"
             max-width="600"
           ></v-img>
         </v-col>
@@ -26,7 +26,7 @@
                 color="secondary"
                 right >
                 <v-tab>Login</v-tab>
-                <v-tab>Registro</v-tab>
+                <v-tab>{{ $t('register')}}</v-tab>
                 <v-tab-item>
                     <Login></Login>
                 </v-tab-item>
@@ -61,13 +61,4 @@
 </script>
 
 
-<style>
-  .main {
-    align-self: center;
-    margin-top: 3%;
-    margin-left: 10%;
-    margin-right: 10%
-  }
-  
-</style>
 

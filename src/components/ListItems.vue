@@ -18,7 +18,7 @@
       >
         <v-list-item
           v-for="item in allItems"
-          :key="item.title"
+          :key="item.id"
           link
           @click.native="sendItems(item.files)"
           to="/files"
@@ -33,9 +33,9 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title v-text="item.title"></v-list-item-title>
+            <v-list-item-title v-text="item.name"></v-list-item-title>
 
-            <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
+            <v-list-item-subtitle v-text="'Modificado '.concat(item.updated_at.split('T')[0], ' ', item.updated_at.split('T')[1].split('.')[0])"></v-list-item-subtitle>
           </v-list-item-content>
 
           <v-list-item-action>
@@ -75,38 +75,37 @@
 
 <script>
     export default {
-        name: 'ListItems',
-        props: ['items'],
-        data() {
-            return {
-              search: '',
-            }
-        },
-        
-        computed: {
-          allItems () {
-            var itemsfound = [];
-            if (this.search != '' && this.items.length > 0){
-              for (let i of this.items){
-                if (i.title.includes(this.search)){
-                  itemsfound.push(i);
-                }
+      name: 'ListItems',
+      props: ['items'],
+      data() {
+          return {
+            search: '',
+          }
+      },
+      
+      computed: {
+        allItems () {
+          var itemsfound = [];
+          if (this.search != '' && this.items.length > 0){
+            for (let i of this.items){
+              if (i.name.includes(this.search)){
+                itemsfound.push(i);
               }
             }
-            if (itemsfound.length > 0){
-              return itemsfound;
-            }
-            return this.items;
           }
-            
-        },
-        
-        methods:{
-          sendItems (items) {
-            this.$emit('cards', items);
+          if (itemsfound.length > 0){
+            return itemsfound;
           }
-
-    }
+          return this.items;
+        }
+          
+      },
+      
+      methods:{
+        sendItems (items) {
+          this.$emit('cards', items);
+        } 
+      }
     
     }
 </script>

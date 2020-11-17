@@ -39,10 +39,10 @@
         </v-toolbar>
         <v-navigation-drawer v-model="drawer" absolute temporary >
             <v-list-item>
-
-                <v-list-item-avatar>
-                    <v-img src="fileIcon.ico"></v-img>
-                </v-list-item-avatar>
+                <v-img
+                    src="https://res.cloudinary.com/cloud4files/image/upload/v1605574424/logo_wqlydh.png"
+                    max-width="35px">
+                </v-img>
             </v-list-item>
 
             <v-divider></v-divider>
