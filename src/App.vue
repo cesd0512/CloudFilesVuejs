@@ -94,6 +94,9 @@ export default {
       display: block;
       margin-bottom: 4px;
       padding-top: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
   }
   .main {
     align-self: center;

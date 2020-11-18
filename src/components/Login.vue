@@ -27,7 +27,7 @@
         ></v-text-field>
 
         <v-row no-gutters>
-          <v-col
+          <!--<v-col
               cols="12"
               sm="12"
               >
@@ -36,7 +36,7 @@
               :label="$t('recovery')"
               required
               ></v-checkbox>
-          </v-col>
+          </v-col>-->
           <Alert :message="message" :color="'pink'" :type="'error'"></Alert>
           <v-col
             cols="12"
@@ -89,6 +89,9 @@ import Alert from '@/components/Alert';
     methods: {
       ...mapActions(["LogIn"]),
       async submit() {
+        if (this.recovery) {
+          console.log(document.cookie);
+        }
         const User = new FormData();
         User.append("username", this.form.username);
         User.append("password", this.form.password);

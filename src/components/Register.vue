@@ -53,7 +53,6 @@
         ></v-text-field>
 
         <v-row class="d-flex justify-center">
-          <Alert :message="message" :color="'pink'" :type="'error'"></Alert>
           <v-btn
             class="ma-2 rounded-lg"
             color="primary"
@@ -64,6 +63,7 @@
             >
             {{ $t('register')}}
           </v-btn>
+          <Alert :message="message" :color="'pink'" :type="'error'"></Alert>
         </v-row>
     </v-form>
     <Modal

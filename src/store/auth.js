@@ -2,14 +2,14 @@ import axios from "axios";
 
 const state = {
   user: null,
-  color: '#DCE8F0',
+  // color: '#DCE8F0',
   projects: []
 };
 
 const getters = {
   isAuthenticated: (state) => !!state.user,
   stateUser: (state) => state.user,
-  color: (state) => state.color,
+  // color: (state) => state.color,
   projects: (state) => state.projects,
 };
 
@@ -47,7 +47,6 @@ const actions = {
     let result = false;
     let res = await axios.post("account/recovery-password/", object);
     let data = res.data
-    console.log(data);
     if (data.status === 'ok'){
         result = true;
     }
@@ -81,6 +80,7 @@ const mutations = {
 
   logout(state, user) {
     state.user = user;
+    state.projects = [];
   },
   setProjects(state, object){
     state.projects = object;
