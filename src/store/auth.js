@@ -57,6 +57,7 @@ const actions = {
     // let res = await axios.post("account/logout/");
     let user = null;
     commit("logout", user);
+    localStorage.clear();
   },
 
   async Projects({commit}, access_token) {

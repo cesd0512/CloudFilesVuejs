@@ -17,7 +17,7 @@
   "user_name": "User Name",
   "password_repeat": "Repeat Password",
   "sign_in": "Sign In",
-  "min_pwd": "At least 8 characters",
+  "min_pwd": "The password at least 8 characters",
   "reset_pwd_title": "Password Recovery",
   "return": "Return",
   "send_email": "Send Email",

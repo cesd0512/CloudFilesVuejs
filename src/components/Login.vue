@@ -61,6 +61,12 @@
           </v-col>
         </v-row>
     </v-form>
+    <v-overlay :value="overlay">
+      <v-progress-circular
+        indeterminate
+        size="64"
+      ></v-progress-circular>
+    </v-overlay>
   </v-container>
 </template>
 
@@ -78,7 +84,8 @@ import Alert from '@/components/Alert';
             username: '',
             password: '',
         },
-        message: null
+        message: null,
+        overlay: false,
     }),
 
     components: {
@@ -89,6 +96,7 @@ import Alert from '@/components/Alert';
     methods: {
       ...mapActions(["LogIn"]),
       async submit() {
+        this.overlay = true;
         if (this.recovery) {
           console.log(document.cookie);
         }
@@ -106,6 +114,13 @@ import Alert from '@/components/Alert';
           this.message = 'error_connection'
         }
       },
-    }
+    },
+    watch: {
+      overlay (val) {
+        val && setTimeout(() => {
+          this.overlay = false
+        }, 3000)
+      },
+    },
   }
 </script>

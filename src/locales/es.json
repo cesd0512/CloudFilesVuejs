@@ -17,7 +17,7 @@
   "user_name": "Nombre de Usuario",
   "password_repeat": "Repetir Contraseña",
   "sign_in": "Registrarse",
-  "min_pwd": "Mínimo 8 Caracteres",
+  "min_pwd": "La contraseña debe tener como mínimo 8 Caracteres",
   "reset_pwd_title": "Recuperar Contraseña",
   "return": "Regresar",
   "send_email": "Enviar Email",

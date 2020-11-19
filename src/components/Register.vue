@@ -71,6 +71,13 @@
     :title="'success_operation'"
     :image="'https://res.cloudinary.com/cloud4files/image/upload/v1605574424/cheque_tevqgd.png'">
     </Modal>
+
+    <v-overlay :value="overlay">
+      <v-progress-circular
+        indeterminate
+        size="64"
+      ></v-progress-circular>
+    </v-overlay>
     
   </v-container>
 </template>
@@ -105,7 +112,8 @@ import Modal from '@/components/Modal.vue';
             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             return pattern.test(value) || 'Invalid e-mail.'
           }
-        }
+        },
+        overlay: false,
       }
     },
 
@@ -127,6 +135,7 @@ import Modal from '@/components/Modal.vue';
           this.message = 'min_pwd';
         } else {
           try {
+            this.overlay = true;
             let res = await this.Register(this.form);
             if (res){
               this.message = 'Registro Existoso !!';
@@ -139,6 +148,13 @@ import Modal from '@/components/Modal.vue';
         }
         
       },
-    }
+    },
+    watch: {
+      overlay (val) {
+        val && setTimeout(() => {
+          this.overlay = false
+        }, 3000)
+      },
+    },
   }
 </script>
