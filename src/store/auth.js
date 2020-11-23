@@ -3,12 +3,13 @@ import axios from "axios";
 const state = {
   user: null,
   // color: '#DCE8F0',
-  projects: []
+  projects: [],
+  files: [],
 };
 
 const getters = {
   isAuthenticated: (state) => !!state.user,
-  stateUser: (state) => state.user,
+  user: (state) => state.user,
   // color: (state) => state.color,
   projects: (state) => state.projects,
 };

@@ -20,8 +20,7 @@
           v-for="item in allItems"
           :key="item.id"
           link
-          @click.native="sendItems(item.files)"
-          to="/files"
+          @click="setItems(item.id)"
         >
           <v-list-item-avatar>
             <v-icon
@@ -72,40 +71,55 @@
   </v-list>
 </template>
 
-
 <script>
-    export default {
-      name: 'ListItems',
-      props: ['items'],
-      data() {
-          return {
-            search: '',
-          }
-      },
-      
-      computed: {
-        allItems () {
-          var itemsfound = [];
-          if (this.search != '' && this.items.length > 0){
-            for (let i of this.items){
-              if (i.name.includes(this.search)){
-                itemsfound.push(i);
-              }
+  import store from "../store";
+  import axios from "axios";
+
+  export default {
+    name: 'ListItems',
+    props: ['items'],
+
+    data() {
+        return {
+          search: '',
+          files: [],
+        }
+    },
+    
+    computed: {
+      allItems () {
+        var itemsfound = [];
+        if (this.search != '' && this.items.length > 0){
+          for (let i of this.items){
+            if (i.name.includes(this.search)){
+              itemsfound.push(i);
             }
           }
-          if (itemsfound.length > 0){
-            return itemsfound;
-          }
-          return this.items;
         }
-          
-      },
-      
-      methods:{
-        sendItems (items) {
-          this.$emit('cards', items);
-        } 
+        if (itemsfound.length > 0){
+          return itemsfound;
+        }
+        return this.items;
       }
+        
+    },
     
+    methods: {
+      async setItems (id) {
+        var access_token = store.getters.user.token;
+        let res = await axios.post('files-project/', {
+            "project": id
+          }, {
+          headers: {
+            'Authorization': `token ${access_token}` 
+            }
+        });
+        if (res.data) {
+          store.state.files = res.data;
+          this.$router.push("/files");
+        }
+      },
     }
+  
+  }
 </script>

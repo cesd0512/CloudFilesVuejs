@@ -17,6 +17,7 @@ import Banner from '@/components/Banner.vue'
 import ListItems from '@/components/ListItems.vue'
 import store from "../store";
 import { mapActions } from "vuex";
+import axios from "axios";
 
 export default {
   name: 'Home',
@@ -24,29 +25,7 @@ export default {
             return {
               icon: 'mdi-format-list-checks',
               title: 'Proyectos',
-              folders: [
-                {
-                  id: 1,
-                  subtitle: 'Jan 9, 2014',
-                  title: 'Photos',
-                  files: [
-                  ],
-                },
-                {
-                  id: 2,
-                  subtitle: 'Jan 17, 2014',
-                  title: 'Recipes',
-                  files: [
-                  ],
-                },
-                {
-                  id: 3,
-                  subtitle: 'Jan 28, 2014',
-                  title: 'Work',
-                  files: [
-                  ],
-                },
-              ],
+              // projects: [],
             }
   },
   components: {
@@ -54,12 +33,16 @@ export default {
     ListItems
   },
   computed: {
-    ...mapActions(["Projects"]),
+    // ...mapActions(["Projects"]),
     projects() {
       let projects = store.getters.projects;
       return projects;
     },
   },
+  created () {},
+  
+  methods: {},
+
 }
 </script>
 
