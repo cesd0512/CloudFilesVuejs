@@ -1,30 +1,35 @@
 <template>
-  <div style="padding: 15px; margin: 0">
-    <v-container class="grey lighten-5">
+  <div style="padding: 15px;">
+    <v-container class="grey lighten-5 ">
       <v-breadcrumbs class=""
         :items="links"
         large
       >
       </v-breadcrumbs>
       <v-row
-        class="mb-6"
+        class="mb-12"
       >
         <v-col
           v-for="n in files"
           :key="n.id"
           cols="6"
-          md="2"
+          md="3"
+          xl="6"
           align="center"
           justify="center"
         >
-          <v-img
-              :src="getImgUrl(n.extension)"
-              class="white--text align-end"
-              height="auto"
-            >
-          </v-img>
+          
+          <MenuImage :image="getImgUrl(n.extension)" :style="{'width': '135px'}"></MenuImage>
           <v-card-text>
-              <b>{{n.name.substr(0, 15) + '.' + n.extension}}</b>
+            <v-row
+              align="center"
+              justify="center"
+            >
+              <b >{{n.name.substr(0, 15) + '.' + n.extension}}</b>
+
+              <div class="grey--text ml-4">
+              </div>
+            </v-row>
           </v-card-text>
         </v-col>
       </v-row>
@@ -33,17 +38,18 @@
 </template>
 
 <script>
+import MenuImage from '@/components/MenuImage.vue'
 
 export default {
   name: 'Files',
     data() {
         return {
-          pdf: 'https://res.cloudinary.com/cloud4files/image/upload/v1606099130/pdf_gh7hrz.png',
-          word: 'https://res.cloudinary.com/cloud4files/image/upload/v1606099130/word_lhowbf.png',
-          other: 'https://res.cloudinary.com/cloud4files/image/upload/v1606099130/other_eed6xc.png',
-          image: 'https://res.cloudinary.com/cloud4files/image/upload/v1606099130/image_twxbsz.png',
-          excel: 'https://res.cloudinary.com/cloud4files/image/upload/v1606099130/excel_wcprf3.png',
-          powerPoint: 'https://res.cloudinary.com/cloud4files/image/upload/v1606099130/powerPoint_bcklw6.png',
+          pdf: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/pdf_opt_p5fh0g.png',
+          word: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/word_opt_dlfjsr.png',
+          other: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/other_opt_blxamk.png',
+          image: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/image_opt_ejbolh.png',
+          excel: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/excel_opt_kmuzhr.png',
+          powerPoint: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/powerPoint_opt_ckbzoc.png',
           links: [
             {
               text: 'Projects',
@@ -59,6 +65,11 @@ export default {
           files: this.$store.state.files,
         }
     },
+
+    components: {
+      MenuImage
+    },
+
     methods: {
           getImgUrl (ext) {
             let icon = this.other;
@@ -75,16 +86,12 @@ export default {
               icon = this.powerPoint;
             }
             return icon;
-          }
+          },
     },
+
     computed: {},
   }
 </script>
 
-<style>
-  .items {
-    margin-top: 15px;
-  }
-
-</style>
+<style></style>
 
