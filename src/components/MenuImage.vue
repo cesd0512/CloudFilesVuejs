@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center" >
+  <v-container >
     <v-menu transition="fab-transition" >
       <template v-slot:activator="{ on, attrs }">
         <v-img 
@@ -9,34 +9,40 @@
         >
         </v-img>
       </template>
-      <div>
-        <v-btn
-          fab
-          dark
-          small
-          color="green"
-        >
-          <v-icon>mdi-pencil</v-icon>
-        </v-btn>
-        <v-btn
-          fab
-          dark
-          small
-          color="red"
-        >
-          <v-icon>mdi-delete</v-icon>
-        </v-btn>
-        <v-btn
-          fab
-          dark
-          small
-          color="indigo"
-        >
-          <v-icon>mdi-eye</v-icon>
-        </v-btn>
-      </div>
+      <v-btn-toggle
+      mandatory
+      light
+      >
+      <v-btn
+        fab
+        small
+        icon
+        title='edit'
+        color="success"
+      >
+        <v-icon>mdi-pencil</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        small
+        icon
+        title='delete'
+        color="secondary"
+      >
+        <v-icon>mdi-delete</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        small
+        icon
+        title='view'
+        color="warning"
+      >
+        <v-icon>mdi-eye</v-icon>
+      </v-btn>
+      </v-btn-toggle>
     </v-menu>
-  </div>
+  </v-container>
 </template>
 
 
