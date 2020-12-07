@@ -5,6 +5,7 @@ const state = {
   // color: '#DCE8F0',
   projects: [],
   files: [],
+  fileView: null,
 };
 
 const getters = {

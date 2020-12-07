@@ -10,7 +10,7 @@
             <v-card-text 
             align="center"
             justify="center">
-                <v-img
+                <v-img v-if="image"
                 :src="image"
                 max-width="80"
                 ></v-img>
@@ -36,7 +36,7 @@
 <script>
   export default {
     name: 'Modal',
-    props: ['dialog', 'title', 'image'],
+    props: ['dialog', 'title', 'image', 'redirect'],
     data() {
         return {
             // modal: false,
@@ -49,7 +49,7 @@
     methods:{
         reload(){
         this.dialog = false;
-        this.$router.push("/login");
+        this.$router.push(this.redirect);
         // location.reload();
         }
     }

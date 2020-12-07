@@ -69,7 +69,8 @@
     <Modal
     :dialog="dialog"
     :title="'success_operation'"
-    :image="'https://res.cloudinary.com/cloud4files/image/upload/v1605574424/cheque_tevqgd.png'">
+    :image="'https://res.cloudinary.com/cloud4files/image/upload/v1605574424/cheque_tevqgd.png'"
+    :redirect="'/login'">
     </Modal>
 
     <v-overlay :value="overlay">

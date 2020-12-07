@@ -5,7 +5,7 @@ export default {
   itemsDrawer: [
     { title: 'Proyectos', icon: 'mdi-file' },
     { title: 'Perfil', icon: 'mdi-account' },
-    { title: 'Favoritos', icon: 'mdi-star' },
+    { title: 'Favoritos', icon: 'mdi-heart' },
     { title: 'Conexión API', icon: 'mdi-access-point' },
   ],
   itemsRight: [

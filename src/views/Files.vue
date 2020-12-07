@@ -19,16 +19,13 @@
           justify="center"
         >
           
-          <MenuImage :image="getImgUrl(n.extension)" :style="{'width': '135px'}"></MenuImage>
+          <MenuImage :image="getImgUrl(n.extension)" :id="n.id" :url="n.url" :style="{'width': '175px'}"></MenuImage>
           <v-card-text>
             <v-row
               align="center"
               justify="center"
             >
               <b >{{n.name.substr(0, 15) + '.' + n.extension}}</b>
-
-              <div class="grey--text ml-4">
-              </div>
             </v-row>
           </v-card-text>
         </v-col>
@@ -50,6 +47,7 @@ export default {
           image: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/image_opt_ejbolh.png',
           excel: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/excel_opt_kmuzhr.png',
           powerPoint: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/powerPoint_opt_ckbzoc.png',
+          compressed: 'https://res.cloudinary.com/cloud4files/image/upload/v1607301993/zip_tu1ki8.png',
           links: [
             {
               text: 'Projects',
@@ -67,7 +65,7 @@ export default {
     },
 
     components: {
-      MenuImage
+      MenuImage,
     },
 
     methods: {
@@ -81,6 +79,8 @@ export default {
               icon = this.word;
             } else if (['xlsx', 'xls', 'xlsm', 'xlsb', 'xltx'].includes(ext)){
               icon = this.excel;
+            } else if (['rar', 'zip'].includes(ext)){
+              icon = this.compressed;
             }
              else if (['pptx', 'pptm', 'ppt', 'pdf'].includes(ext)){
               icon = this.powerPoint;
