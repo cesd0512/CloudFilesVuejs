@@ -6,6 +6,7 @@ const state = {
   projects: [],
   files: [],
   fileView: null,
+  lengthPages: 1,
 };
 
 const getters = {

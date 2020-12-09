@@ -83,6 +83,7 @@
         return {
           search: '',
           files: [],
+          pagination: 8,
         }
     },
     
@@ -108,15 +109,17 @@
       async setItems (id) {
         var access_token = store.getters.user.token;
         let res = await axios.post('files-project/', {
-            "project": id
+            "project": id,
+            "pagination": this.pagination
           }, {
           headers: {
             'Authorization': `token ${access_token}` 
             }
         });
         if (res.data) {
-          store.state.files = res.data;
-          this.$router.push("/files");
+          store.state.files = res.data.results;
+          store.state.lengthPages = Math.round(res.data.count/this.pagination) + 1;
+          this.$router.push("/files/?project="+id);
         }
       },
     }
