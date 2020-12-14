@@ -1,5 +1,5 @@
 <template>
-    <v-sheet height="auto" absolute> 
+    <v-sheet height="auto" class="mx-auto overflow-hidden"> 
         <v-toolbar class='indigo'>
             <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
@@ -37,7 +37,12 @@
                 </v-list>
             </v-menu>
         </v-toolbar>
-        <v-navigation-drawer v-model="drawer" absolute temporary >
+        <v-navigation-drawer
+        v-model="drawer"
+        absolute 
+        temporary
+        height="100%"
+         >
             <v-list-item>
                 <v-img
                     src="https://res.cloudinary.com/cloud4files/image/upload/v1605574424/logo_wqlydh.png"
@@ -55,7 +60,7 @@
                     <v-list-item
                     v-for="(item, i) in items"
                     :key="i"
-                    @click="selected=i"
+                    @click="dispatchUrl(i, item.url)"
                     >
                         <v-list-item-icon >
                             <v-icon medium color="indigo darken-2">{{ item.icon }}</v-icon>
@@ -91,7 +96,7 @@ export default {
             return this.$store.getters.isAuthenticated;
         },
         userName(){
-            this.user = this.$store.getters.stateUser;
+            this.user = this.$store.getters.user;
             var fullName = '';
             if (this.user){
                 fullName = this.user.first_name + ' ' + this.user.last_name;
@@ -105,6 +110,14 @@ export default {
             await this.$store.dispatch("LogOut");
             this.$router.push("/login");
         },
+        dispatchUrl(selected, url){
+            console.log(this.$router.currentRoute.path);
+            this.selected = selected;
+            if (this.$router.currentRoute.path != url) {
+                this.$router.push(url);
+            }
+
+        }
     },
 };
 </script>

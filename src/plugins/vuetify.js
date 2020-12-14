@@ -20,6 +20,7 @@ export default new Vuetify({
         warning: '#FFC107',
         indigo: '#1a73e8',
         other: '#3CA6F2',
+        other2: '#E9F4F4'
       },
     },
   },

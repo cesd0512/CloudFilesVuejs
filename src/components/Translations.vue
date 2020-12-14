@@ -1,10 +1,11 @@
 <template>
-  <div style="width:12%; height:5px; float: right;">
-        <v-select
-          v-model="$i18n.locale"
-          :items="langs"
-          rounded
-        ></v-select>
+  <div style="width:10%; height:5px; float: right;">
+    <v-select
+      v-model="$i18n.locale"
+      :items="langs"
+      rounded
+      style="margin-rigth: 120px"
+    ></v-select>
   </div>
 </template>
 

@@ -1,15 +1,8 @@
 <template>
   <v-app id="app">
-    <div v-if="session">
-      <Dash app></Dash> 
-    </div>
-    <div style="margin-left:12%; margin-right:12%;" v-else>
-      <Translations></Translations>
-      <Title :title="'Cloud4Files'" :image="'https://res.cloudinary.com/cloud4files/image/upload/v1605574424/logo_wqlydh.png'"></Title>
-      <v-divider></v-divider>
-    </div>
+    <Dash app></Dash> 
 
-    <v-main style="background-color:#F6F8F9">
+    <v-main style="background-color:#F6F8F9; ">
       <v-container fluid>
         <router-view></router-view>
       </v-container>
@@ -32,31 +25,19 @@
 <script>
 
 import Dash from './components/Dash';
-import Title from './components/Title';
-import Login from './views/Login';
-import store from "./store";
-import Translations from "./components/Translations";
 
 export default {
   name: 'App',
 
   components: {
     Dash,
-    Login,
-    Title,
-    Translations,
   },
 
   data: () => ({
-    sessionAuthenticated: false,
     langs: ['es', 'en']
   }),
 
   computed: {
-    session () {
-      this.sessionAuthenticated = store.getters.isAuthenticated;
-      return this.sessionAuthenticated;
-    },
       
   },
 };
@@ -103,6 +84,11 @@ export default {
     margin-top: 3%;
     margin-left: 10%;
     margin-right: 10%
+  }
+  .fixedContainer {
+    position: fixed;
+    width: 100%;
+    z-index: 1;
   }
   
 </style>

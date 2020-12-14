@@ -20,7 +20,7 @@
           v-for="item in allItems"
           :key="item.id"
           link
-          @click="setItems(item.id)"
+          @click="setItems(item)"
         >
           <v-list-item-avatar>
             <v-icon
@@ -106,10 +106,10 @@
     },
     
     methods: {
-      async setItems (id) {
+      async setItems (item) {
         var access_token = store.getters.user.token;
         let res = await axios.post('files-project/', {
-            "project": id,
+            "project": item.id,
             "pagination": this.pagination
           }, {
           headers: {
@@ -119,7 +119,7 @@
         if (res.data) {
           store.state.files = res.data.results;
           store.state.lengthPages = Math.round(res.data.count/this.pagination) + 1;
-          this.$router.push("/files/?project="+id);
+          this.$router.push("/files/?project="+item.id+'&n='+item.name);
         }
       },
     }

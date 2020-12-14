@@ -27,16 +27,6 @@
         ></v-text-field>
 
         <v-row no-gutters>
-          <!--<v-col
-              cols="12"
-              sm="12"
-              >
-              <v-checkbox
-              v-model="recovery"
-              :label="$t('recovery')"
-              required
-              ></v-checkbox>
-          </v-col>-->
           <Alert :message="message" :color="'pink'" :type="'error'"></Alert>
           <v-col
             cols="12"

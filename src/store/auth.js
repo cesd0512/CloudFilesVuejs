@@ -7,6 +7,7 @@ const state = {
   files: [],
   fileView: null,
   lengthPages: 1,
+  fixedClass: 'fixedContainer'
 };
 
 const getters = {

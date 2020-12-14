@@ -1,11 +1,28 @@
 <template>
-  <div style="padding: 10px;">
+  <div style="padding: 5px;">
     <v-container class="white lighten-5 ">
-      <v-breadcrumbs class=""
-        :items="linksMenu"
-        large
-      >
-      </v-breadcrumbs>
+      <v-col 
+        cols="12"
+        >
+        <v-text-field
+          append-icon="mdi-magnify"
+          v-model="search"
+          label="Search Files In Project"
+          color="indigo"
+          outlined
+          clearable
+          clear-icon="mdi-close-circle-outline"
+          @click:append="loadPagination()"
+          @click:clear="loadPagination(close=true)"
+          @keyup.enter="loadPagination()"
+        ></v-text-field>
+        <v-breadcrumbs
+          :items="linksMenu"
+          large
+        >
+        </v-breadcrumbs>
+      </v-col>
+
       <v-row
         class="mb-12"
       >
@@ -34,7 +51,7 @@
         class="mb-12"
         align="center"
         justify="center"
-        @click="updatePage()"
+        @click="loadPagination()"
       >
         <v-pagination
           v-model="page"
@@ -75,6 +92,9 @@ export default {
           files: this.$store.state.files,
           length: this.$store.state.lengthPages,
           page: 1,
+          search: null,
+          caseSensitive: false,
+          close: false,
 
         }
     },
@@ -108,35 +128,43 @@ export default {
         }
         return icon;
       },
-      async updatePage () {
+      async loadPagination () {
         let currentUrl = window.location.href;
         let url_ = new URL(currentUrl);
         if (url_.searchParams.get("project")){
           let project = url_.searchParams.get("project");
-          var access_token = store.getters.user.token;
+          let access_token = store.getters.user.token;
           let url = "files-project/?page=" + this.page;
-          let res = await axios.post(url, {
+          let objRequest = {
               "project": project,
-              "pagination": 8
-            }, {
+              "pagination": 8,
+              "search": ''
+          }
+          if (this.search){
+            objRequest.search = this.search;
+          }
+          if (this.close){
+            this.search = '';
+            this.close = false;
+            objRequest.search = '';
+          }
+          let res = await axios.post(url, objRequest, {
             headers: {
               'Authorization': `token ${access_token}` 
             }
           });
           if (res.data) {
             this.files = res.data.results;
-            // store.state.lengthPages = Math.round(res.data.count/this.pagination) + 1;
-            // this.$router.push("/files/?project="+project);
           }
         }
-      },
+      }
     },
 
     computed: {
       linksMenu() {
         let currentUrl = window.location.href;
         let url_ = new URL(currentUrl);
-        let project = url_.searchParams.get("project");
+        let project = url_.searchParams.get("n");
         if (project) {
           this.links.push(
             {
