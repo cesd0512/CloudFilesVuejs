@@ -10,62 +10,10 @@
         class="mx-4"
       ></v-text-field>
     </div>
-    <v-row no-gutters>
-      <v-col
-        cols="12"
-        sm="6"
-        md="10"
-      >
-        <v-list-item
-          v-for="item in allItems"
-          :key="item.id"
-          link
-          @click="setItems(item)"
-        >
-          <v-list-item-avatar>
-            <v-icon
-              class="grey lighten-1"
-              dark
-            >
-              mdi-briefcase
-            </v-icon>
-          </v-list-item-avatar>
-
-          <v-list-item-content>
-            <v-list-item-title v-text="item.name"></v-list-item-title>
-
-            <v-list-item-subtitle v-text="'Modificado '.concat(item.updated_at.split('T')[0], ' ', item.updated_at.split('T')[1].split('.')[0])"></v-list-item-subtitle>
-          </v-list-item-content>
-
-          <v-list-item-action>
-            <v-btn icon>
-              <v-icon color="grey lighten-1">mdi-information</v-icon>
-            </v-btn>
-          </v-list-item-action>
-        </v-list-item>
-      </v-col>
-      <div style="margin: auto;">
-      <v-col
-        cols="6"
-        md="2"
-      >
-        <v-btn
-          class="mx-2"
-          dark
-          rounded
-          block
-          color="indigo"
-        >
-          Crear
-          <v-icon dark>
-            mdi-plus
-          </v-icon>
-        </v-btn>
-      </v-col>
-      </div>
-    </v-row>
-
-    
+    <div>
+      <Scroller :items="allItems" :height="'350'" @click="handleClick"></Scroller>
+     
+    </div>
 
     <v-divider inset></v-divider>
   </v-list>
@@ -74,6 +22,7 @@
 <script>
   import store from "../store";
   import axios from "axios";
+  import Scroller from '@/components/Scroller.vue'
 
   export default {
     name: 'ListItems',
@@ -85,6 +34,10 @@
           files: [],
           pagination: 8,
         }
+    },
+
+    components: {
+      Scroller,
     },
     
     computed: {
@@ -106,22 +59,9 @@
     },
     
     methods: {
-      async setItems (item) {
-        var access_token = store.getters.user.token;
-        let res = await axios.post('files-project/', {
-            "project": item.id,
-            "pagination": this.pagination
-          }, {
-          headers: {
-            'Authorization': `token ${access_token}` 
-            }
-        });
-        if (res.data) {
-          store.state.files = res.data.results;
-          store.state.lengthPages = Math.round(res.data.count/this.pagination) + 1;
-          this.$router.push("/files/?project="+item.id+'&n='+item.name);
-        }
-      },
+      handleClick(item) {
+      this.$emit("click", item);
+    }
     }
   
   }

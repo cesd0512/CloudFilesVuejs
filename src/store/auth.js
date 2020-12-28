@@ -7,7 +7,7 @@ const state = {
   files: [],
   fileView: null,
   lengthPages: 1,
-  fixedClass: 'fixedContainer'
+  openDialogForm: false
 };
 
 const getters = {
@@ -57,24 +57,23 @@ const actions = {
     return result;
   },
 
-  async LogOut({ commit }) {
-    // let res = await axios.post("account/logout/");
+  async LogOut({ commit }, access_token) {
+    let res = await axios.post("account/logout/", {}, {
+      headers: {
+        'Authorization': `token ${access_token}` 
+      }
+    });
     let user = null;
     commit("logout", user);
     localStorage.clear();
   },
 
-  async Projects({commit}, access_token) {
-    console.log(access_token);
-    let res = await axios.get('projects/', {
-      headers: {
-        'Authorization': `token ${access_token}` 
-      }
-    });
-    await commit("setProjects", data.user);
-    return res.data;
 
-  },
+  async CreateProject({commit}, object){
+    await commit("setProjects", object);
+    return {};
+
+  }
 
 };
 

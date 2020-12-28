@@ -66,12 +66,12 @@
           <Alert :message="message" :color="'pink'" :type="'error'"></Alert>
         </v-row>
     </v-form>
-    <Modal
+    <ModalMessage
     :dialog="dialog"
     :title="'success_operation'"
     :image="'https://res.cloudinary.com/cloud4files/image/upload/v1605574424/cheque_tevqgd.png'"
     :redirect="'/login'">
-    </Modal>
+    </ModalMessage>
 
     <v-overlay :value="overlay">
       <v-progress-circular
@@ -86,7 +86,7 @@
 <script>
 import { mapActions } from "vuex";
 import Alert from '@/components/Alert';
-import Modal from '@/components/Modal.vue';
+import ModalMessage from '@/components/ModalMessage.vue';
 // import Banner from '@/components/Banner.vue'
 
   export default {
@@ -119,7 +119,7 @@ import Modal from '@/components/Modal.vue';
     },
 
     components: {
-      Modal,
+      ModalMessage,
       Alert
       // Banner
     },

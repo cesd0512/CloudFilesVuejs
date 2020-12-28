@@ -84,20 +84,20 @@
         
       </v-row>
     </div>
-    <Modal :dialog="dialog" :title="'success_operation'" :image="'https://res.cloudinary.com/cloud4files/image/upload/v1605574424/cheque_tevqgd.png'">
-    </Modal>
+    <ModalMessage :dialog="dialog" :title="'success_operation'" :image="'https://res.cloudinary.com/cloud4files/image/upload/v1605574424/cheque_tevqgd.png'">
+    </ModalMessage>
   </div>
 </template>
 
 <script>
 import { mapActions } from "vuex";
 import Alert from '@/components/Alert';
-import Modal from '@/components/Modal.vue';
+import ModalMessage from '@/components/ModalMessage.vue';
 
   export default {
     components: {
       Alert,
-      Modal
+      ModalMessage
     },
 
     data: () => ({

@@ -87,9 +87,9 @@ import Alert from '@/components/Alert';
       ...mapActions(["LogIn"]),
       async submit() {
         this.overlay = true;
-        if (this.recovery) {
-          console.log(document.cookie);
-        }
+        // if (this.recovery) {
+        //   console.log(document.cookie);
+        // }
         const User = new FormData();
         User.append("username", this.form.username);
         User.append("password", this.form.password);
@@ -97,7 +97,7 @@ import Alert from '@/components/Alert';
             let res = await this.LogIn(User);
             if (res){
                 this.$router.push("/");
-            }else{
+            } else{
                 this.message = 'error_session_start'
             }
         } catch (error) {

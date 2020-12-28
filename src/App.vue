@@ -8,7 +8,7 @@
       </v-container>
     </v-main>
 
-    <v-footer app 
+    <v-footer  
       class="font-weight-medium indigo " dark app
       >
       <v-col
@@ -46,19 +46,42 @@ export default {
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap');
   @media screen and (max-width: 600px) {
-    .hidden{
+    .hidden {
       display:none;
     }
-    .extend{
+    .extend {
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+    .fixedContainer {
+      position: fixed;
+      width: 100%;
+      z-index: 1;
+      left: 60%;
+      bottom: 12%
+    }
+    .lastLogin {
+      display:none;
+      
+    }
+  }
+   @media screen and (min-width: 601px) {    
+    .fixedContainer {
     }
   }
   #app {
     font-family: 'Roboto', sans-serif;
     background-color:#F6F8F9;
   }
+
+  .fixedColumn {
+      position: fixed;
+      width: 100%;
+      z-index: 1;
+      left: 75%;
+      top: 20%
+    }
 
   .forgot-password-link {
       font-size: 16px;
@@ -85,10 +108,8 @@ export default {
     margin-left: 10%;
     margin-right: 10%
   }
-  .fixedContainer {
-    position: fixed;
-    width: 100%;
-    z-index: 1;
+  .home {
+    padding-top: 15px;
   }
   
 </style>

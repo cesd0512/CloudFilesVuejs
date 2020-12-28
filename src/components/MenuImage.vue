@@ -1,15 +1,10 @@
 <template>
   <v-container >
-    <v-menu
-    offset-x
-    v-model="showMenu"
-    >
-      <template v-slot:activator="{ on, attrs }">
         <v-card style="padding:12px">
           <v-img 
             :src="image"
             class="white--text align-end"
-            height="125px"
+            height="118px"
           >
           </v-img>
 
@@ -23,53 +18,11 @@
             </v-btn>
 
 
-            <v-btn icon title="Show Menu">
-              <v-icon @click="showMenu = !showMenu">mdi-dots-vertical</v-icon>
-            </v-btn>
+            <Menu :items="itemsMenu" @click="execAction"></Menu>
 
           </v-card-actions>
         </v-card>
-      </template>
 
-      <v-list>
-        <v-list-item
-            @click=""
-            link
-            >
-            <v-list-item-icon >
-                <v-icon medium color="indigo">mdi-pencil</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-                <v-list-item-title>Edit</v-list-item-title>
-            </v-list-item-content>
-        </v-list-item>
-        <v-list-item
-            @click=""
-            link
-            >
-            <v-list-item-icon >
-                <v-icon medium color="indigo">mdi-delete</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-                <v-list-item-title>Delete</v-list-item-title>
-            </v-list-item-content>
-        </v-list-item>
-        <v-list-item
-            @click="viewFile()"
-            link
-            >
-            <v-list-item-icon >
-                <v-icon medium color="indigo">mdi-file-eye-outline</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-                <v-list-item-title>Details</v-list-item-title>
-            </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-menu>
-
-
-    <!--<FilePreview :show="show" :file="fileView"></FilePreview>-->
   </v-container>
 </template>
 
@@ -77,7 +30,7 @@
 <script>
   import store from "../store";
   import axios from "axios";
-  // import FilePreview from '@/components/FilePreview.vue';
+  import Menu from '@/components/Menu.vue'
 
   export default {
     name: 'MenuImage',
@@ -88,12 +41,17 @@
           showMenu: false,
           fileView: null,
           iconFav: 'mdi-heart-outline',
-          color: 'gray'
+          color: 'gray',
+          itemsMenu: [
+            {'title': 'Edit', 'icon': 'mdi-pencil', 'action': 'actionEdit'},
+            {'title': 'Delete', 'icon': 'mdi-delete', 'action': 'actionDelete'},
+            {'title': 'Info', 'icon': 'mdi-information', 'action': 'actionInfo'},
+          ]
         }
     },
 
     components: {
-      // FilePreview,
+      Menu
     },
     
     computed: {
@@ -105,6 +63,22 @@
     },
     
     methods:{
+      actionEdit(){
+        console.log('Editar');
+
+      },
+      actionDelete(){
+        console.log('Borrar');
+
+      },
+      actionInfo(){
+        console.log('informacion');
+
+      },
+      execAction(action){
+        var EjecutarFuncion='this.' + action + '()';
+        eval(EjecutarFuncion);
+      },
 
       async viewFile(){
         let access_token = store.getters.user.token;
@@ -114,7 +88,6 @@
             'Authorization': `token ${access_token}` 
             }
         });
-
         if (res.data) {
           let link = document.createElement('a');
           let file_download = "http://localhost:8000" + this.url;
@@ -123,14 +96,9 @@
           let confWindow = "width=1000, height=800, screenY=" + y + " screenX=" + x;
           window.open(file_download,  "File", confWindow);
           
-          // calculamos la posicion x e y para centrar la ventana
-  
-
-          // this.fileView = file_download;
-          // this.show = true;
         }
-
       },
+
       activeButton(){
         if (this.iconFav == 'mdi-heart'){
           this.iconFav = 'mdi-heart-outline';
@@ -140,21 +108,8 @@
           this.iconFav = 'mdi-heart';
           this.color = 'secondary';
         }
-
-      },
-      show (e) {
-        e.preventDefault()
-        this.showMenu = false
-        this.x = e.clientX
-        this.y = e.clientY
-        this.$nextTick(() => {
-          this.showMenu = true
-        })
-      },
-
-
+      }
     }
-  
   }
 </script>
 

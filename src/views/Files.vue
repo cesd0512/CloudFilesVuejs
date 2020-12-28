@@ -1,27 +1,38 @@
 <template>
-  <div style="padding: 5px;">
     <v-container class="white lighten-5 ">
-      <v-col 
+      <v-row>
+        <v-col 
         cols="12"
+        md="10"
         >
-        <v-text-field
-          append-icon="mdi-magnify"
-          v-model="search"
-          label="Search Files In Project"
-          color="indigo"
-          outlined
-          clearable
-          clear-icon="mdi-close-circle-outline"
-          @click:append="loadPagination()"
-          @click:clear="loadPagination(close=true)"
-          @keyup.enter="loadPagination()"
-        ></v-text-field>
+          <v-text-field
+            append-icon="mdi-magnify"
+            v-model="search"
+            label="Search Files In Project"
+            color="indigo"
+            outlined
+            clearable
+            clear-icon="mdi-close-circle-outline"
+            @click:append="loadPagination()"
+            @click:clear="loadPagination(close=true)"
+            @keyup.enter="loadPagination()"
+          ></v-text-field>
+        </v-col>
+        <v-col
+          cols="6"
+          md="2"
+          class="fixedContainer"
+        >
+          <div style="margin-left: 50px">
+              <ModalForm :titleButton="'Upload File'" :iconButton="'mdi-upload'" :title="'Upload File'" :color="'secondary'" :iconBar="'mdi-briefcase'"></ModalForm>
+          </div>
+        </v-col>
         <v-breadcrumbs
           :items="linksMenu"
           large
         >
         </v-breadcrumbs>
-      </v-col>
+      </v-row>
 
       <v-row
         class="mb-12"
@@ -36,13 +47,13 @@
           justify="center"
         >
           
-          <MenuImage :image="getImgUrl(n.extension)" :id="n.id" :url="n.media_url" :style="{'width': '175px'}"></MenuImage>
+          <MenuImage :image="getImgUrl(n.extension)" :id="n.id" :url="n.media_url" :style="{'width': '169px'}"></MenuImage>
           <v-card-text>
             <v-row
               align="center"
               justify="center"
             >
-              <b >{{n.name.substr(0, 15) + '.' + n.extension}}</b>
+              <b >{{getFileName(n.name)}}</b>
             </v-row>
           </v-card-text>
         </v-col>
@@ -57,15 +68,17 @@
           v-model="page"
           :length="length"
           circle
+          color='secondary'
         ></v-pagination>
       </v-row>
 
+
     </v-container>
-  </div>
 </template>
 
 <script>
-import MenuImage from '@/components/MenuImage.vue'
+import MenuImage from '@/components/MenuImage.vue';
+import ModalForm from '@/components/ModalForm.vue';
 import store from "../store";
 import axios from "axios";
 
@@ -101,6 +114,7 @@ export default {
 
     components: {
       MenuImage,
+      ModalForm
     },
 
     methods: {
@@ -157,6 +171,13 @@ export default {
             this.files = res.data.results;
           }
         }
+      },
+
+      getFileName(name){
+        if (name.length > 15){
+          name = name.substr(0, 18) + '...'
+        }
+        return name;
       }
     },
 

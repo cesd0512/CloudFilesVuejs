@@ -20,11 +20,6 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue')
-  },
-  {
     path: '/files',
     name: 'Files',
     component: () => import('../views/Files.vue'),

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import MenuNavigation from './Menu/MenuNavigation';
+import MenuNavigation from './Navigation/MenuNavigation';
 import Title from './Title';
 import store from "../store";
 import Translations from "./Translations";

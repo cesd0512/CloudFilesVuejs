@@ -78,6 +78,7 @@
 
 <script>
 import menuData from './menu-data';
+import { mapActions } from "vuex";
 
 export default {
     name: 'MenuNavigation',
@@ -106,8 +107,10 @@ export default {
     },
 
     methods: {
+        ...mapActions(["LogOut"]),
         async logout() {
-            await this.$store.dispatch("LogOut");
+            // await this.$store.dispatch("LogOut");
+            await this.LogOut(this.$store.getters.user.token);
             this.$router.push("/login");
         },
         dispatchUrl(selected, url){
@@ -116,7 +119,6 @@ export default {
             if (this.$router.currentRoute.path != url) {
                 this.$router.push(url);
             }
-
         }
     },
 };
