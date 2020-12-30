@@ -18,7 +18,18 @@
             md="2"
             class="fixedContainer"
           >
-            <ModalForm :titleButton="'New Project'" :iconButton="'mdi-plus'" :color="'secondary'" :title="'Create Project'" :iconBar="'mdi-briefcase'"></ModalForm>
+            <ModalForm 
+            :titleButton="'New Project'" 
+            :iconButton="'mdi-plus'" 
+            :color="'secondary'" 
+            :title="'Create Project'" 
+            :iconBar="'mdi-briefcase'"
+            :okMessage="'Proyecto Creado'"
+            :errorMensaje="'Error'"
+            :fields="fields"
+            :form="form"
+            >
+            </ModalForm>
           </v-col>
         </div>
       </v-row>
@@ -45,6 +56,11 @@ export default {
       icon: 'mdi-format-list-checks',
       title: 'Proyectos',
       pagination: 8,
+      fields: [
+        {'type': 'text', 'label': 'Nombre', 'model': 'name', 'placeholder': null, 'size': null},
+        {'type': 'textarea', 'label': 'Descripción', 'model': 'description', 'placeholder': null, 'size': null}
+        ],
+      form: {'name': '', 'description': ''}
     }
   },
   components: {

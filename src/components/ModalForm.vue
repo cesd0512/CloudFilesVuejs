@@ -34,53 +34,45 @@
           <v-toolbar-title>Settings</v-toolbar-title>
           
         </v-toolbar>
-        <v-container class="grey lighten-5" style="padding:20px; margin-top:20px">
-        <v-row class="d-flex justify-center" >
-          <v-col
-            cols="12"
-            md="8"
-            align="center"
-            justify="center"
+        <v-container class="grey lighten-5" style="margin-top:5px">
+          <v-row class="d-flex justify-center" style="margin:10px" >
+            <v-col
+              cols="12"
+              md="8"
+              align="center"
+              justify="center"
+              >
+              <Banner :color="'primary'" :title="title" :icon="iconBar"></Banner>
+            </v-col>
+            <v-col
+              cols="12"
+              md="8"
+              v-for="(f, ind) in fields"
+              :key="ind"
+              style="padding:0px"
             >
-             <Banner :color="'primary'" :title="title" :icon="'mdi-briefcase'"></Banner>
-          </v-col>
-          <v-col
-            cols="12"
-            md="8"
-          >
-            <v-text-field
-              label="Project Name"
-              outlined
-              clearable
-              v-model="form.name"
-            ></v-text-field>
-            <v-textarea
-              outlined
-              name="input-7-4"
-              label="Description of project"
-              value=""
-              clearable
-              v-model="form.description"
-            ></v-textarea>
-          </v-col>
-          <v-col
-            cols="12"
-            md="8"
-            align="center"
-            justify="center"
-          >
-            <v-btn 
+              <v-text-field v-if="f.type==='text'"  :label="f.label" outlined clearable v-model="form[f.model]" ></v-text-field>
+              <v-textarea v-else-if="f.type === 'textarea'" outlined :label="f.label" clearable v-model="form[f.model]" ></v-textarea>
+              <InputFile v-else-if="f.type === 'file'" :color="'primary'" :label="f.label" :placeholder="f.placeholder" :size="f.size" ></InputFile>
+            </v-col>
+            <v-col
+              cols="12"
+              md="8"
+              align="center"
+              justify="center"
+            >
+              <v-btn 
               color="secondary"
               dark
               large
               hover
               min-width="120px"
               @click="save()"
-            >
-              Save
-            </v-btn>
-          </v-col>
-        </v-row>
+              >
+                Save
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-container>
       </v-card>
     </v-dialog>
@@ -95,7 +87,7 @@
             max-width="344"
             light
             >
-            <v-card-title>Proyecto creado existosamente</v-card-title>
+            <v-card-title>{{okMessage}}</v-card-title>
             <v-row justify="center" style="margin:20px">
               <v-btn
                 class="white--text"
@@ -117,24 +109,25 @@
 <script>
   import { mapActions } from "vuex";
   import Banner from '@/components/Banner.vue';
+  import InputFile from '@/components/InputFile.vue';
   import axios from "axios";
 
   export default {
     name: 'ModalForm',
-    props: ['titleButton', 'iconButton', 'title', 'iconBar', 'color'],
+    props: [
+      'titleButton', 'iconButton', 'title', 'iconBar',
+      'color', 'okMessage', 'errorMensaje', 'fields', 'form'
+      ],
     data() {
         return {
           dialog: false,
-          form: {
-            'name': '',
-            'description': ''
-          },
           overlay: false,
           zIndex: 0,
         }
     },
     components: {
       Banner,
+      InputFile
     },
     
     computed: {

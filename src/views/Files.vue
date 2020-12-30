@@ -1,5 +1,6 @@
 <template>
     <v-container class="white lighten-5 ">
+    <!--<component :is="rawHtml" />-->
       <v-row>
         <v-col 
         cols="12"
@@ -23,8 +24,18 @@
           md="2"
           class="fixedContainer"
         >
-          <div style="margin-left: 50px">
-              <ModalForm :titleButton="'Upload File'" :iconButton="'mdi-upload'" :title="'Upload File'" :color="'secondary'" :iconBar="'mdi-briefcase'"></ModalForm>
+          <div style="margin-left: 40px">
+              <ModalForm 
+              :titleButton="'Upload File'" 
+              :iconButton="'mdi-upload'" 
+              :title="'Upload File'" 
+              :color="'secondary'" 
+              :iconBar="'mdi-cloud-upload'"
+              :okMessage="'Proyecto creado existosamente'"
+              :errorMensaje="'Error'"
+              :fields="fields"
+              :form="form"
+              ></ModalForm>
           </div>
         </v-col>
         <v-breadcrumbs
@@ -108,6 +119,11 @@ export default {
           search: null,
           caseSensitive: false,
           close: false,
+          fields: [
+            {'type': 'file', 'label': 'Subir Archivo', 'model': 'file', 'placeholder': 'archivo', 'size': 1000},
+            ],
+          form: {'file': ''}
+          // rawHtml: 'ModalForm'
 
         }
     },
