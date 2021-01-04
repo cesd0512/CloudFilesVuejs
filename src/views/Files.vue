@@ -31,10 +31,13 @@
               :title="'Upload File'" 
               :color="'secondary'" 
               :iconBar="'mdi-cloud-upload'"
-              :okMessage="'Proyecto creado existosamente'"
+              :okMessage="'File Uploaded successfull'"
               :errorMensaje="'Error'"
+              :nomButton= "'Upload'"
               :fields="fields"
               :form="form"
+              :action="'uploadFiles'"
+              @click="execAction"
               ></ModalForm>
           </div>
         </v-col>
@@ -91,21 +94,14 @@
 import MenuImage from '@/components/MenuImage.vue';
 import ModalForm from '@/components/ModalForm.vue';
 import store from "../store";
+import { mapActions } from "vuex";
 import axios from "axios";
+import { getImgUrl, pagination } from '../functions';
 
 export default {
   name: 'Files',
     data() {
         return {
-          pdf: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/pdf_opt_p5fh0g.png',
-          word: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/word_opt_dlfjsr.png',
-          other: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/other_opt_blxamk.png',
-          image: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/image_opt_ejbolh.png',
-          excel: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/excel_opt_kmuzhr.png',
-          powerPoint: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/powerPoint_opt_ckbzoc.png',
-          compressed: 'https://res.cloudinary.com/cloud4files/image/upload/v1607301993/zip_tu1ki8.png',
-          video: 'https://res.cloudinary.com/cloud4files/image/upload/v1607455867/video_s7p213.png',
-          audio: 'https://res.cloudinary.com/cloud4files/image/upload/v1607459187/audio-file_xsze45.png',
           links: [
             {
               text: 'Projects',
@@ -113,14 +109,14 @@ export default {
               to: '/',
             }
           ],
-          files: this.$store.state.files,
-          length: this.$store.state.lengthPages,
+          files: store.getters.files,
+          length: store.getters.lengthPages,
           page: 1,
           search: null,
           caseSensitive: false,
           close: false,
           fields: [
-            {'type': 'file', 'label': 'Subir Archivo', 'model': 'file', 'placeholder': 'archivo', 'size': 1000},
+            {'type': 'file', 'label': 'Subir Archivo', 'model': 'file', 'placeholder': 'Upload File', 'size': 1000},
             ],
           form: {'file': ''}
           // rawHtml: 'ModalForm'
@@ -134,30 +130,12 @@ export default {
     },
 
     methods: {
+      ...mapActions(["addFiles", "setFiles"]),
       getImgUrl (ext) {
-        let icon = this.other;
-        if (['png', 'jpg', 'jpeg', 'gif', 'bmp', 'psd', 'ai', 'cdr', 'dwg',
-          'svg', 'raw', 'net'].includes(ext)) {
-          icon = this.image;
-        } else if (['pdf'].includes(ext)){
-          icon = this.pdf;
-        } else if (['doc', 'docx', 'dotm', 'dotx', 'docm'].includes(ext)){
-          icon = this.word;
-        } else if (['xlsx', 'xls', 'xlsm', 'xlsb', 'xltx'].includes(ext)){
-          icon = this.excel;
-        } else if (['rar', 'zip'].includes(ext)){
-          icon = this.compressed;
-        } else if (['pptx', 'pptm', 'ppt', 'pdf'].includes(ext)){
-          icon = this.powerPoint;
-        } else if (['mp4', 'MKV', 'asf', 'QT', 'QTL', 'avi', 'mov', 'MPEG',
-          'MPG', 'WebM', 'FLV ', 'SWF', 'wmv', 'asf', 'VOB', 'DVD', 'rpm'].includes(ext)){
-          icon = this.video;
-        } else if (['mp3', 'mid ', 'midi', 'wav', 'wma', 'cda', 'ogg',
-          'ogm', 'aac', 'ac3', 'flac', 'aym'].includes(ext)){
-          icon = this.audio;
-        }
-        return icon;
+        let image = getImgUrl(ext);
+        return image;
       },
+
       async loadPagination () {
         let currentUrl = window.location.href;
         let url_ = new URL(currentUrl);
@@ -167,7 +145,6 @@ export default {
           let url = "files-project/?page=" + this.page;
           let objRequest = {
               "project": project,
-              "pagination": 8,
               "search": ''
           }
           if (this.search){
@@ -194,7 +171,27 @@ export default {
           name = name.substr(0, 18) + '...'
         }
         return name;
+      },
+
+      execAction(action){
+        var EjecutarFuncion='this.' + action + '()';
+        eval(EjecutarFuncion);
+      },
+
+      async uploadFiles(){
+        var files = store.state.inputFiles;
+        let currentUrl = window.location.href;
+        let url_ = new URL(currentUrl);
+        let projectId = url_.searchParams.get("project");
+        let nameProject = url_.searchParams.get("n");
+        let token = store.getters.token;
+        var object = {'files': files, 'token': token, 'projectId': projectId};
+        await this.addFiles(object);
+        object = {'token': token, 'projectId': projectId, 'pagination': pagination};
+        await this.setFiles(object);
+        this.files = store.getters.files;
       }
+
     },
 
     computed: {

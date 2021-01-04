@@ -10,9 +10,8 @@
         class="mx-4"
       ></v-text-field>
     </div>
-    <div>
-      <Scroller :items="allItems" :height="'350'" @click="handleClick"></Scroller>
-     
+    <div v-if="scroller">
+      <Scroller :items="allItems" :height="'350'" @click="selectedItem"></Scroller>
     </div>
 
     <v-divider inset></v-divider>
@@ -26,7 +25,7 @@
 
   export default {
     name: 'ListItems',
-    props: ['items'],
+    props: ['items', 'scroller'],
 
     data() {
         return {
@@ -59,9 +58,9 @@
     },
     
     methods: {
-      handleClick(item) {
-      this.$emit("click", item);
-    }
+      selectedItem(item) {
+        this.$emit("click", item);
+      }
     }
   
   }

@@ -12,7 +12,7 @@
           link
           >
             <v-row 
-            @click="handleClick(item)"
+            @click="selectedItem(item)"
             >
                 <v-list-item-action>
                 <v-btn
@@ -64,13 +64,14 @@
     }),
 
     methods: {
-        handleClick(item) {
+        selectedItem(item) {
             this.$emit("click", item);
         },
+
         actionEdit(){
             console.log('Editar');
-
         },
+        
         actionDelete(){
             console.log('Borrar');
 

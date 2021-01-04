@@ -51,9 +51,26 @@
               :key="ind"
               style="padding:0px"
             >
-              <v-text-field v-if="f.type==='text'"  :label="f.label" outlined clearable v-model="form[f.model]" ></v-text-field>
-              <v-textarea v-else-if="f.type === 'textarea'" outlined :label="f.label" clearable v-model="form[f.model]" ></v-textarea>
-              <InputFile v-else-if="f.type === 'file'" :color="'primary'" :label="f.label" :placeholder="f.placeholder" :size="f.size" ></InputFile>
+              <v-text-field v-if="f.type==='text'"  
+              :label="f.label" 
+              outlined 
+              clearable 
+              v-model="form[f.model]" >
+              </v-text-field>
+
+              <v-textarea v-else-if="f.type === 'textarea'"
+              outlined :label="f.label" 
+              clearable 
+              v-model="form[f.model]" >
+              </v-textarea>
+
+              <InputFile v-else-if="f.type === 'file'" 
+              :color="'primary'" 
+              :label="f.label" 
+              :placeholder="f.placeholder" 
+              :size="f.size"
+              >
+              </InputFile>
             </v-col>
             <v-col
               cols="12"
@@ -67,25 +84,22 @@
               large
               hover
               min-width="120px"
-              @click="save()"
+              @click="execAction(action)"
               >
-                Save
+                {{ nomButton }}
               </v-btn>
             </v-col>
           </v-row>
         </v-container>
       </v-card>
     </v-dialog>
-    <div v-if="overlay">
-      <v-row justify="center">
-        <v-overlay
-        :z-index="zIndex"
-        :value="overlay"
+    <v-row justify="center">
+      <div v-if="overlay">
+        <v-dialog
+          v-model="overlay"
+          max-width="344"
         >
           <v-card
-            class="mx-auto"
-            max-width="344"
-            light
             >
             <v-card-title>{{okMessage}}</v-card-title>
             <v-row justify="center" style="margin:20px">
@@ -98,10 +112,10 @@
               </v-btn>
             </v-row>
             <br>
-        </v-card>
-      </v-overlay>
-      </v-row>
-   </div>
+          </v-card>
+        </v-dialog>
+      </div>
+    </v-row>
   </v-row>
 </template>
 
@@ -115,8 +129,8 @@
   export default {
     name: 'ModalForm',
     props: [
-      'titleButton', 'iconButton', 'title', 'iconBar',
-      'color', 'okMessage', 'errorMensaje', 'fields', 'form'
+      'titleButton', 'iconButton', 'title', 'iconBar', 'nomButton',
+      'color', 'okMessage', 'errorMensaje', 'fields', 'form', 'action'
       ],
     data() {
         return {
@@ -134,25 +148,11 @@
     },
     
     methods:{
-      ...mapActions(["CreateProject"]),
-
-      async save(){
-        let access_token = this.$store.state.auth.user.token;
-        let res = await axios.post("projects/", this.form, {
-        headers: {
-            'Authorization': `token ${access_token}` 
-          }
-        });
-        if (res.data){
-          let projects = this.$store.state.auth.projects;
-          projects.push(res.data.project);
-          this.CreateProject(projects);
-          this.form.name = '';
-          this.form.description = '';
-          this.dialog = false;
-          this.overlay = true;
-        }
-      },
+      async execAction(action){
+        this.dialog = false;
+        this.overlay = true;
+        await this.$emit('click', action);
+      }
 
     }
   

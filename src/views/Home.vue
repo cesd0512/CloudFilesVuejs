@@ -10,7 +10,11 @@
           sm="6"
           md="10"
         >
-          <ListItems :items="projects" @click="handleClick"></ListItems>
+          <ListItems 
+          :items="projects" 
+          :scroller="true" 
+          @click="selectedItem">
+          </ListItems>
         </v-col>
         <div style="margin: auto;">
           <v-col
@@ -26,8 +30,11 @@
             :iconBar="'mdi-briefcase'"
             :okMessage="'Proyecto Creado'"
             :errorMensaje="'Error'"
+            :nomButton= "'Save'"
             :fields="fields"
             :form="form"
+            :action="'saveProject'"
+            @click="execAction"
             >
             </ModalForm>
           </v-col>
@@ -48,6 +55,7 @@ import ModalForm from '@/components/ModalForm.vue';
 import store from "../store";
 import { mapActions } from "vuex";
 import axios from "axios";
+import { setFiles } from '../functions';
 
 export default {
   name: 'Home',
@@ -57,59 +65,66 @@ export default {
       title: 'Proyectos',
       pagination: 8,
       fields: [
-        {'type': 'text', 'label': 'Nombre', 'model': 'name', 'placeholder': null, 'size': null},
-        {'type': 'textarea', 'label': 'Descripción', 'model': 'description', 'placeholder': null, 'size': null}
-        ],
+        {'type': 'text', 'label': 'Nombre', 'model': 'name',
+        'placeholder': null, 'size': null
+        },
+        {'type': 'textarea', 'label': 'Descripción', 'model': 'description',
+        'placeholder': null, 'size': null
+        }
+      ],
       form: {'name': '', 'description': ''}
     }
   },
+
   components: {
     Banner,
     ListItems,
     ModalForm,
   },
+
   computed: {
     projects() {
       let projects = store.getters.projects;
       return projects;
     },
+
     lastLogin(){
       let lastLogin = 'LastLogin';
       if (store.getters.user){
         lastLogin = store.getters.user.last_login;
         lastLogin = lastLogin.split('T')[0] + ' ' + lastLogin.split('T')[1].split('.')[0]
-      return lastLogin;
-        
+        return lastLogin;
       }
     }
-    
-  },
-  created () {
 
   },
   
   methods: {
-    async setItems (item) {
-        var access_token = store.getters.user.token;
-        let res = await axios.post('files-project/', {
-            "project": item.id,
-            "pagination": this.pagination
-          }, {
-          headers: {
-            'Authorization': `token ${access_token}` 
-            }
-        });
-        if (res.data) {
-          store.state.files = res.data.results;
-          store.state.lengthPages = Math.round(res.data.count/this.pagination) + 1;
-          this.$router.push("/files/?project="+item.id+'&n='+item.name);
-        }
-    },
-    handleClick(item) {
-        this.setItems(item);
-    }
-  },
+    ...mapActions(["addProject", "setFiles"]),
 
+    async selectedItem(item) {
+      var token = store.getters.token;
+      var object = {'token': token, 'projectId': item.id, 'pagination': this.pagination};
+      await this.setFiles(object);
+      this.$router.push("/files/?project="+item.id+'&n='+item.name);
+    },
+
+    async saveProject(){
+      var token = store.state.auth.user.token;
+      var object = {'token': token, 'form': this.form}
+      var res = this.addProject(object);
+      
+      if (res.data){
+        this.form.name = '';
+        this.form.description = '';
+      }
+    },
+
+    execAction(action){
+      var EjecutarFuncion='this.' + action + '()';
+      eval(EjecutarFuncion);
+    }
+  }
 }
 </script>
 

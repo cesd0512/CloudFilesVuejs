@@ -91,9 +91,16 @@
         if (res.data) {
           let link = document.createElement('a');
           let file_download = "http://localhost:8000" + this.url;
-          let y=parseInt(window.screen.height/8);
-          let x=parseInt(window.screen.width/4);
-          let confWindow = "width=1000, height=800, screenY=" + y + " screenX=" + x;
+          let fullWidth = window.screen.width;
+          let fullHeight = window.screen.height;
+          let y=parseInt(fullHeight/8);
+          let x=parseInt(fullWidth/4);
+          let width = fullWidth * (1/2);
+          if (fullWidth<600){
+            width = fullWidth;
+          }
+          let height = fullHeight * (3/4);
+          let confWindow = "width=" + width + ", height=" + height + ", screenY=" + y + " screenX=" + x;
           window.open(file_download,  "File", confWindow);
           
         }
