@@ -95,7 +95,20 @@ const actions = {
     });
     if (res.data) {
       await commit("setFiles", res.data.results);
-      var pages = Math.round(res.data.count / object['pagination']) + 1;
+      let numPages = (res.data.count / object['pagination']);
+      numPages = numPages.toString().split('.');
+      let pages = 0
+      if (numPages.length>1){
+        let ind = numPages[1];
+        let numInd = Number(ind[0]);
+        if (numInd < 5){
+          pages = 1;
+        }
+      }
+      pages += Math.round(res.data.count / object['pagination']);
+      if (pages == 0){
+        pages = 1;
+      }
       await commit("setPagination", pages);
     }
   },

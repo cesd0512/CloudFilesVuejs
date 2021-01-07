@@ -150,7 +150,7 @@
     methods:{
       async execAction(action){
         this.dialog = false;
-        this.overlay = true;
+        // this.overlay = true;
         await this.$emit('click', action);
       }
 

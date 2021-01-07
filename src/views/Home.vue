@@ -55,7 +55,7 @@ import ModalForm from '@/components/ModalForm.vue';
 import store from "../store";
 import { mapActions } from "vuex";
 import axios from "axios";
-import { setFiles } from '../functions';
+import { setFiles, pagination } from '../functions';
 
 export default {
   name: 'Home',
@@ -63,7 +63,6 @@ export default {
     return {
       icon: 'mdi-format-list-checks',
       title: 'Proyectos',
-      pagination: 8,
       fields: [
         {'type': 'text', 'label': 'Nombre', 'model': 'name',
         'placeholder': null, 'size': null
@@ -104,7 +103,7 @@ export default {
 
     async selectedItem(item) {
       var token = store.getters.token;
-      var object = {'token': token, 'projectId': item.id, 'pagination': this.pagination};
+      var object = {'token': token, 'projectId': item.id, 'pagination': pagination};
       await this.setFiles(object);
       this.$router.push("/files/?project="+item.id+'&n='+item.name);
     },

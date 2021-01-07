@@ -73,19 +73,68 @@
         </v-col>
       </v-row>
       <v-row
-        class="mb-12"
-        align="center"
-        justify="center"
-        @click="loadPagination()"
+      align="center"
+      justify="center"
       >
-        <v-pagination
-          v-model="page"
-          :length="length"
-          circle
-          color='secondary'
-        ></v-pagination>
-      </v-row>
+        <v-card
+          flat
+          class="py-12"
+        >
+          <v-card-text>
+            <v-row
+            align="center"
+            justify="center"
+            >
+              <v-col
+              style="padding:5px"
+              >
+                <v-btn 
+                color="white" 
+                fab
+                small
+                @click="pagPrev()"
+                :disabled="prev"
+                >
+                  <v-icon>mdi-chevron-left</v-icon>
+                </v-btn>
+              </v-col>
+              <v-col
+                v-for="(b, i) in qtyPages"
+                style="padding:5px"
+              >
+                <v-btn 
+                :color="b.color" 
+                fab
+                small
+                @click="updatePagBtns(i)"
+                >
+                  {{b.value}}
+                </v-btn>
 
+              </v-col>
+              <v-col
+              style="padding:5px"
+              >
+                <v-btn 
+                  color="white" 
+                  fab
+                  small
+                  @click="pagNext()"
+                  :disabled="next"
+                  >
+                    <v-icon>mdi-chevron-right</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-row>
+      <v-overlay :value="overlay">
+      <v-progress-circular
+        indeterminate
+        size="64"
+      ></v-progress-circular>
+    </v-overlay>
 
     </v-container>
 </template>
@@ -112,13 +161,17 @@ export default {
           files: store.getters.files,
           length: store.getters.lengthPages,
           page: 1,
+          nextPage: 1,
           search: null,
           caseSensitive: false,
           close: false,
           fields: [
             {'type': 'file', 'label': 'Subir Archivo', 'model': 'file', 'placeholder': 'Upload File', 'size': 1000},
             ],
-          form: {'file': ''}
+          form: {'file': ''},
+          overlay: false,
+          pagBtns: [{'value': 1, 'color': 'secondary'}],
+          indPage: 0
           // rawHtml: 'ModalForm'
 
         }
@@ -131,12 +184,33 @@ export default {
 
     methods: {
       ...mapActions(["addFiles", "setFiles"]),
+
       getImgUrl (ext) {
         let image = getImgUrl(ext);
         return image;
       },
 
+      async pagPrev(){
+        var page = this.indPage - 1;
+        await this.updatePagBtns(page);
+      },
+
+      async pagNext(){
+        var page = this.indPage + 1;
+        await this.updatePagBtns(page);
+      },
+
+      async updatePagBtns(ind){
+        this.pagBtns[this.indPage].color = 'white';
+        this.pagBtns[ind].color = 'secondary';
+        this.indPage = ind;
+        this.page = this.indPage + 1;
+        await this.loadPagination();
+
+      },
+
       async loadPagination () {
+
         let currentUrl = window.location.href;
         let url_ = new URL(currentUrl);
         if (url_.searchParams.get("project")){
@@ -145,6 +219,7 @@ export default {
           let url = "files-project/?page=" + this.page;
           let objRequest = {
               "project": project,
+              "pagination": pagination,
               "search": ''
           }
           if (this.search){
@@ -179,6 +254,9 @@ export default {
       },
 
       async uploadFiles(){
+        console.time('uploadFiles')
+
+        this.overlay = true;
         var files = store.state.inputFiles;
         let currentUrl = window.location.href;
         let url_ = new URL(currentUrl);
@@ -189,7 +267,11 @@ export default {
         await this.addFiles(object);
         object = {'token': token, 'projectId': projectId, 'pagination': pagination};
         await this.setFiles(object);
+
         this.files = store.getters.files;
+        this.length = store.getters.lengthPages;
+        
+        console.timeEnd('uploadFiles')
       }
 
     },
@@ -210,8 +292,42 @@ export default {
 
         }
         return this.links;
+      },
+
+      qtyPages(){
+        var qtyPags = this.length - this.pagBtns.length;
+        for (let i=1; i <= qtyPags; i++){
+          this.pagBtns.push({'value': Number(i)+1, 'color': 'white'});
+        }
+        return this.pagBtns;
+      },
+
+      next(){
+        if (this.page == this.length){
+          return true;
+        }
+        return false;
+      },
+
+      prev(){
+        if (this.page == 1){
+          return true;
+        }
+        return false;
+
       }
+
     },
+
+    watch: {
+      overlay (val) {
+        val && setTimeout(() => {
+          this.overlay = false;
+          // location.reload(); 
+        }, 3000)
+      },
+    }
+    
   }
 </script>
 
