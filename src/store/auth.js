@@ -84,7 +84,9 @@ const actions = {
   },
 
   async setFiles({commit}, object){
-    let res = await axios.post('files-project/', 
+    let res = null;
+    if (object.projectId){
+      res = await axios.post('files-project/', 
       {
         "project": object['projectId'],
         "pagination": object['pagination']
@@ -92,7 +94,28 @@ const actions = {
         headers: {
           'Authorization': `token ${object['token']}` 
         }
-    });
+      });
+    } else if(object.favorite){
+      res = await axios.get('files/',  {
+        headers: {
+          'Authorization': `token ${object['token']}` 
+        },
+        params: {
+          "favorite": object['favorite'],
+          "pagination": object['pagination']
+        }
+      });
+
+    } else {
+      res = await axios.get('files/', {
+        headers: {
+          'Authorization': `token ${object['token']}` 
+        },
+        params: {
+          'pagination': object['pagination']
+        }
+      });
+    }
     if (res.data) {
       await commit("setFiles", res.data.results);
       let numPages = (res.data.count / object['pagination']);
@@ -125,7 +148,6 @@ const actions = {
             'Authorization': `token ${object['token']}`
         }
       });
-      console.log(res);
     }
     return {};
   }

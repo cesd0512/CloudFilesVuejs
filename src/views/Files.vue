@@ -1,142 +1,127 @@
 <template>
-    <v-container class="white lighten-5 ">
-    <!--<component :is="rawHtml" />-->
-      <v-row>
-        <v-col 
-        cols="12"
-        md="10"
-        >
-          <v-text-field
-            append-icon="mdi-magnify"
-            v-model="search"
-            label="Search Files In Project"
-            color="indigo"
-            outlined
-            clearable
-            clear-icon="mdi-close-circle-outline"
-            @click:append="loadPagination()"
-            @click:clear="loadPagination(close=true)"
-            @keyup.enter="loadPagination()"
-          ></v-text-field>
-        </v-col>
-        <v-col
-          cols="6"
-          md="2"
-          class="fixedContainer"
-        >
-          <div style="margin-left: 40px">
-              <ModalForm 
-              :titleButton="'Upload File'" 
-              :iconButton="'mdi-upload'" 
-              :title="'Upload File'" 
-              :color="'secondary'" 
-              :iconBar="'mdi-cloud-upload'"
-              :okMessage="'File Uploaded successfull'"
-              :errorMensaje="'Error'"
-              :nomButton= "'Upload'"
-              :fields="fields"
-              :form="form"
-              :action="'uploadFiles'"
-              @click="execAction"
-              ></ModalForm>
-          </div>
-        </v-col>
-        <v-breadcrumbs
-          :items="linksMenu"
-          large
-        >
-        </v-breadcrumbs>
-      </v-row>
+  <v-container class="white lighten-5 ">
+  <!--<component :is="rawHtml" />-->
+    <v-row>
+      <v-col 
+      cols="12"
+      md="10"
+      >
+        <v-text-field
+          append-icon="mdi-magnify"
+          v-model="search"
+          label="Search Files "
+          color="indigo"
+          outlined
+          clearable
+          clear-icon="mdi-close-circle-outline"
+          @click:append="loadPagination()"
+          @click:clear="loadPagination(close=true)"
+          @keyup.enter="loadPagination()"
+        ></v-text-field>
+      </v-col>
+      <v-col
+        cols="6"
+        md="2"
+        class="fixedContainer"
+      >
+        <div class="large">
+            <ModalForm 
+            :titleButton="'Upload File'" 
+            :iconButton="'mdi-upload'" 
+            :title="'Upload File'" 
+            :color="'secondary'" 
+            :iconBar="'mdi-cloud-upload'"
+            :okMessage="'File Uploaded successfull'"
+            :errorMensaje="'Error'"
+            :nomButton= "'Upload'"
+            :fields="fields"
+            :form="form"
+            :action="'uploadFiles'"
+            @click="execAction"
+            ></ModalForm>
+        </div>
+      </v-col>
+      <v-breadcrumbs v-if="linksMenu"
+        :items="linksMenu"
+        large
+      >
+      </v-breadcrumbs>
+    </v-row>
 
-      <v-row
-        class="mb-12"
+    <v-row
+      class="mb-12"
+    >
+      <v-col
+        v-for="n in files"
+        :key="n.id"
+        cols="6"
+        md="3"
+        xl="6"
+        align="center"
+        justify="center"
       >
-        <v-col
-          v-for="n in files"
-          :key="n.id"
-          cols="6"
-          md="3"
-          xl="6"
-          align="center"
-          justify="center"
-        >
-          
-          <MenuImage :image="getImgUrl(n.extension)" :id="n.id" :url="n.media_url" :style="{'width': '169px'}"></MenuImage>
-          <v-card-text>
-            <v-row
-              align="center"
-              justify="center"
-            >
-              <b >{{getFileName(n.name)}}</b>
-            </v-row>
-          </v-card-text>
-        </v-col>
-      </v-row>
-      <v-row
-      align="center"
-      justify="center"
-      >
-        <v-card
-          flat
-          class="py-12"
-        >
-          <v-card-text>
-            <v-row
+        
+        <MenuImage 
+        :image="getImgUrl(n.extension)" 
+        :favorite="n.favorite" 
+        :id="n.id" 
+        :url="n.media_url" 
+        :style="{'width': '169px'}">
+        </MenuImage>
+        <v-card-text>
+          <v-row
             align="center"
             justify="center"
-            >
-              <v-col
-              style="padding:5px"
-              >
-                <v-btn 
-                color="white" 
-                fab
-                small
-                @click="pagPrev()"
-                :disabled="prev"
-                >
-                  <v-icon>mdi-chevron-left</v-icon>
-                </v-btn>
-              </v-col>
-              <v-col
-                v-for="(b, i) in qtyPages"
-                style="padding:5px"
-              >
-                <v-btn 
-                :color="b.color" 
-                fab
-                small
-                @click="updatePagBtns(i)"
-                >
-                  {{b.value}}
-                </v-btn>
+          >
+            <b >{{getFileName(n.name)}}</b>
+          </v-row>
+        </v-card-text>
+      </v-col>
+    </v-row>
 
-              </v-col>
-              <v-col
-              style="padding:5px"
-              >
-                <v-btn 
-                  color="white" 
-                  fab
-                  small
-                  @click="pagNext()"
-                  :disabled="next"
-                  >
-                    <v-icon>mdi-chevron-right</v-icon>
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
-      </v-row>
-      <v-overlay :value="overlay">
+    <v-row
+      class="mb-12"
+      align="center"
+      justify="center"
+      onresize="myFunction()"
+    >
+      <v-btn 
+      color="white" 
+      fab
+      x-small
+      @click="pagPrev()"
+      :disabled="prev"
+      >
+        <v-icon>mdi-chevron-double-left</v-icon>
+      </v-btn>
+
+      <v-pagination
+        v-model="page"
+        :length="length"
+        :total-visible="pagesVisible"
+        color='secondary'
+        circle
+        @input="loadPagination()"
+      ></v-pagination>
+      
+      <v-btn 
+      color="white" 
+      fab
+      x-small
+      @click="pagNext()"
+      :disabled="next"
+      >
+        <v-icon>mdi-chevron-double-right</v-icon>
+      </v-btn>
+    </v-row>
+    <v-overlay :value="overlay">
       <v-progress-circular
         indeterminate
         size="64"
       ></v-progress-circular>
     </v-overlay>
 
-    </v-container>
+  </v-container>
 </template>
 
 <script>
@@ -147,17 +132,12 @@ import { mapActions } from "vuex";
 import axios from "axios";
 import { getImgUrl, pagination } from '../functions';
 
+
 export default {
   name: 'Files',
     data() {
         return {
-          links: [
-            {
-              text: 'Projects',
-              disabled: false,
-              to: '/',
-            }
-          ],
+          links: [],
           files: store.getters.files,
           length: store.getters.lengthPages,
           page: 1,
@@ -171,7 +151,8 @@ export default {
           form: {'file': ''},
           overlay: false,
           pagBtns: [{'value': 1, 'color': 'secondary'}],
-          indPage: 0
+          indPage: 0,
+          pagevb: 7
           // rawHtml: 'ModalForm'
 
         }
@@ -182,8 +163,25 @@ export default {
       ModalForm
     },
 
+    created() {
+      window.addEventListener("resize", this.displayWindowSize);
+    },
+    destroyed() {
+      window.removeEventListener("resize", this.displayWindowSize);
+    },
+
     methods: {
       ...mapActions(["addFiles", "setFiles"]),
+
+      displayWindowSize(){
+        if (screen.width <= 600) {
+          this.pagevb = 4;
+        } else if(screen.width <=900){
+          this.pagevb = 5;
+        } else {
+          this.pagevb = 7;
+        }
+      },
 
       getImgUrl (ext) {
         let image = getImgUrl(ext);
@@ -191,25 +189,24 @@ export default {
       },
 
       async pagPrev(){
-        var page = this.indPage - 1;
-        await this.updatePagBtns(page);
+        this.page  = 1;
+        this.loadPagination();
       },
 
       async pagNext(){
-        var page = this.indPage + 1;
-        await this.updatePagBtns(page);
+        this.page  = this.length;
+        this.loadPagination();
       },
 
       async updatePagBtns(ind){
         this.pagBtns[this.indPage].color = 'white';
         this.pagBtns[ind].color = 'secondary';
         this.indPage = ind;
-        this.page = this.indPage + 1;
+        this.page = this.pagBtns[ind].value;
         await this.loadPagination();
-
       },
 
-      async loadPagination () {
+      async loadPagination(){
 
         let currentUrl = window.location.href;
         let url_ = new URL(currentUrl);
@@ -282,22 +279,41 @@ export default {
         let url_ = new URL(currentUrl);
         let project = url_.searchParams.get("n");
         if (project) {
-          this.links.push(
-            {
-              text: project.toString(),
-              disabled: true,
-              to: '/files',
-            }
-          );
-
+          this.links = [{
+                text: 'Projects',
+                disabled: false,
+                to: '/',
+          }]
+            this.links.push(
+              {
+                text: project.toString(),
+                disabled: true,
+                to: '/files',
+              }
+            );
+          if (this.page) {
+            this.links.push(
+              {
+                text: this.page.toString(),
+                disabled: true,
+                to: '/files',
+              }
+            );
+          }
         }
         return this.links;
       },
 
       qtyPages(){
-        var qtyPags = this.length - this.pagBtns.length;
-        for (let i=1; i <= qtyPags; i++){
-          this.pagBtns.push({'value': Number(i)+1, 'color': 'white'});
+        let qtyBtns = this.pagBtns.length;
+        let qtyPages = this.length - qtyBtns;
+        let n = qtyBtns;
+
+        for (let i=1; i <= qtyPages; i++){
+          n += 1;
+          this.pagBtns.push({
+            'value': n, 'color': 'white'
+            });
         }
         return this.pagBtns;
       },
@@ -314,8 +330,19 @@ export default {
           return true;
         }
         return false;
+      },
 
+      pagesVisible(){
+        if (screen.width <= 600) {
+          this.pagevb = 4;
+        } else if(screen.width <=900){
+          this.pagevb = 5;
+        } else {
+          this.pagevb = 7;
+        }
+        return this.pagevb;
       }
+
 
     },
 

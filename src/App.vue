@@ -58,8 +58,8 @@ export default {
       position: fixed;
       width: 100%;
       z-index: 1;
-      left: 60%;
-      bottom: 12%
+      left: 75%;
+      top: 20%
     }
     .lastLogin {
       display:none;
@@ -67,7 +67,8 @@ export default {
     }
   }
    @media screen and (min-width: 601px) {    
-    .fixedContainer {
+    .large {
+      margin-left: 40px
     }
   }
   #app {

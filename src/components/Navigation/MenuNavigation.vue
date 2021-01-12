@@ -52,7 +52,7 @@
 
             <v-divider></v-divider>
 
-            <v-list>
+            <v-list rounded style="padding:10px">
                 <v-list-item-group
                 v-model="selected"
                 color="indigo"
@@ -63,7 +63,7 @@
                     @click="dispatchUrl(i, item.url)"
                     >
                         <v-list-item-icon >
-                            <v-icon medium color="indigo darken-2">{{ item.icon }}</v-icon>
+                            <v-icon medium color="indigo lighten-2">{{ item.icon }}</v-icon>
                         </v-list-item-icon>
 
                         <v-list-item-content>
@@ -71,6 +71,8 @@
                         </v-list-item-content>
                     </v-list-item>
                 </v-list-item-group>
+
+
             </v-list>
         </v-navigation-drawer>
     </v-sheet>
@@ -107,15 +109,24 @@ export default {
     },
 
     methods: {
-        ...mapActions(["LogOut"]),
+        ...mapActions(["LogOut", "setFiles"]),
+
         async logout() {
-            // await this.$store.dispatch("LogOut");
             await this.LogOut(this.$store.getters.user.token);
             this.$router.push("/login");
         },
-        dispatchUrl(selected, url){
-            console.log(this.$router.currentRoute.path);
+
+        async dispatchUrl(selected, url){
             this.selected = selected;
+            var token = this.$store.getters.user.token;
+            if (url.includes('file')){
+                let object = {'pagination': 8, 'token': token};
+                await this.setFiles(object);
+            }
+            else if (url.includes('favorites')){
+                let object = {'pagination': 8, 'favorite':true, 'token': token};
+                await this.setFiles(object);
+            }
             if (this.$router.currentRoute.path != url) {
                 this.$router.push(url);
             }
