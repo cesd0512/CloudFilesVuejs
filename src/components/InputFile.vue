@@ -64,6 +64,12 @@
           </v-list-item>
         </template>
       </v-virtual-scroll>
+      <h5
+      v-if="files.length > 0" 
+      style="height:10px; margin:20px; float: right; color:#4E5252"
+      >
+        {{totalFiles + ' (' + convertToKb(totalSize) + ' in total)'}}
+      </h5>
   </v-container>
 </template>
 
@@ -94,7 +100,19 @@ export default {
           }
         }
         return heightList;
+      },
 
+      totalFiles(){
+        return this.files.length + ' files';
+      },
+
+      totalSize(){
+        let size = 0;
+        for (let i=0; i<this.files.length; i++){
+          console.log(this.files[i].size);
+          size += this.files[i].size;
+        }
+        return size;
       }
     },
 
