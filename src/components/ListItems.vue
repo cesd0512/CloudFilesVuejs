@@ -3,7 +3,7 @@
     subheader
     two-line
     >
-    <div>
+    <div v-if="searchInList">
       <v-text-field
         v-model="search"
         label="Buscar"
@@ -14,7 +14,6 @@
       <Scroller :items="allItems" :height="'350'" @click="selectedItem"></Scroller>
     </div>
 
-    <v-divider inset></v-divider>
   </v-list>
 </template>
 
@@ -25,7 +24,7 @@
 
   export default {
     name: 'ListItems',
-    props: ['items', 'scroller'],
+    props: ['items', 'scroller', 'searchInList'],
 
     data() {
         return {

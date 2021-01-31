@@ -1,40 +1,47 @@
 <template>
   <div class="home">
     <v-container class="grey lighten-5" >
-      <h5 class="lastLogin" style="height:5px; float: right; color:#B0B4B4">Last Login: {{lastLogin}}</h5>
-      <h2>Página Principal</h2><br/>
-      <v-container class="grey lighten-5" >
-        <Banner :title="'Projectos Recientes'" :icon="'mdi-format-list-checks'"></Banner>
-        <v-row no-gutters>
-          <v-col
-            cols="12"
-            sm="6"
-            md="12"
+      <h2>Todos los Proyectos</h2><br/>
+      <br>
+      <Banner :title="title" :icon="icon"></Banner>
+      <v-row no-gutters>
+        <v-col
+          cols="12"
+          sm="6"
+          md="10"
+        >
+          <ListItems 
+          :items="projects" 
+          :scroller="true" 
+          :searchInList="true"
+          @click="selectedItem"
           >
-            <ListItems 
-            :items="recentProjects" 
-            :scroller="true" 
-            @click="selectedItem">
-            </ListItems>
-          </v-col>
-        </v-row>
-        <br>
-        <Banner :title="'Ultimas Descargas'" :icon="'mdi-format-list-checks'"></Banner>
-        <v-row no-gutters>
+          </ListItems>
+        </v-col>
+        <div style="margin: auto;">
           <v-col
-            cols="12"
-            sm="6"
-            md="12"
+            cols="6"
+            md="2"
+            class="fixedContainer"
           >
-            <ListItems 
-            :items="recentProjects" 
-            :scroller="true" 
-            @click="selectedItem">
-            </ListItems>
+            <ModalForm 
+            :titleButton="'New Project'" 
+            :iconButton="'mdi-plus'" 
+            :color="'secondary'" 
+            :title="'Create Project'" 
+            :iconBar="'mdi-briefcase'"
+            :okMessage="'Proyecto Creado'"
+            :errorMensaje="'Error'"
+            :nomButton= "'Save'"
+            :fields="fields"
+            :form="form"
+            :action="'saveProject'"
+            @click="execAction"
+            >
+            </ModalForm>
           </v-col>
-        </v-row>
-      </v-container>
-     
+        </div>
+      </v-row>
     </v-container>
   </div>
 </template>

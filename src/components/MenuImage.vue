@@ -111,6 +111,14 @@
           let height = fullHeight * (3/4);
           let confWindow = "width=" + width + ", height=" + height + ", screenY=" + y + " screenX=" + x;
           window.open(file_download,  "File", confWindow);
+          
+          let access_token = store.getters.user.token;
+          let res = await axios.get('download-file/'+ this.id +'/', {
+            headers: {
+              'Authorization': `token ${access_token}` 
+            }
+          });
+          console.log(res)
         }
       },
 

@@ -5,6 +5,7 @@
         :items="items"
         :height="height"
         item-height="64"
+        
       >
         <template v-slot:default="{ item }">
           <v-list-item 
@@ -13,29 +14,33 @@
           >
             <v-row 
             @click="selectedItem(item)"
+            style="margin-top:15px; "
             >
                 <v-list-item-action>
-                <v-btn
-                    fab
-                    small
-                    depressed
-                    color="primary"
-                >
-                    <!--<v-icon
-                        dark
-                    >
-                        mdi-briefcase
-                    </v-icon>-->
-                    {{ item.name.substr(0, 1) }}
-                </v-btn>
+                  <v-btn
+                      fab
+                      small
+                      depressed
+                      color="primary"
+                  >
+                      <!--<v-icon
+                          dark
+                      >
+                          mdi-briefcase
+                      </v-icon>-->
+                      {{ item.name.substr(0, 1) }}
+                  </v-btn>
                 </v-list-item-action>
 
                 <v-list-item-content>
-                <v-list-item-title> {{ item.name }} </v-list-item-title>
+                  <v-list-item-title> {{ item.name }} </v-list-item-title>
+                 
+                  <v-list-item-subtitle v-text="item.updated_at.split('T')[0]"></v-list-item-subtitle>
                 </v-list-item-content>
             </v-row>
 
             <v-list-item-action>
+             
               <Menu :items="itemsMenu" @click="execAction"></Menu>
             </v-list-item-action>
           </v-list-item>

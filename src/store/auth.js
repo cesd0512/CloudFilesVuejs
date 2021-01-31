@@ -4,6 +4,7 @@ import { uploadFiles } from "../functions";
 const state = {
   user: null,
   projects: [],
+  recentProjects: [],
   files: [],
   lengthPages: 1,
   inputFiles: []
@@ -14,6 +15,7 @@ const getters = {
   user: (state) => state.user,
   token: (state) => state.user.token,
   projects: (state) => state.projects,
+  recentProjects: (state) => state.recentProjects,
   files: (state) => state.files,
   lengthPages: (state) => state.lengthPages,
 };
@@ -45,6 +47,12 @@ const actions = {
           }
         });
         await commit("setProjects", res.data);
+        res = await axios.get('recent-projects/', {
+          headers: {
+            'Authorization': `token ${access_token}` 
+          }
+        });
+        await commit("setRecentProjects", res.data);
     }
     return result;
   },
@@ -168,6 +176,10 @@ const mutations = {
 
   setProjects(state, object){
     state.projects = object;
+  },
+
+  setRecentProjects(state, object){
+    state.recentProjects = object;
   },
 
   addProject(state, object){

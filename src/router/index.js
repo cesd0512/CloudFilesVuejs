@@ -26,6 +26,12 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: '/projects',
+    name: 'Projects',
+    component: () => import('../views/Projects.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
     path: '/password-reset',
     name: 'PasswordReset',
     component: PasswordReset
