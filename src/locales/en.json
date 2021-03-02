@@ -19,7 +19,7 @@
   "sign_in": "Sign In",
   "min_pwd": "The password at least 8 characters",
   "reset_pwd_title": "Password Recovery",
-  "return": "Return",
+  "return": "Log in",
   "send_email": "Send Email",
   "change_pwd": "Change Password",
   "fields_empty": "Fields Empty"

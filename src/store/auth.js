@@ -16,6 +16,7 @@ const getters = {
   token: (state) => state.user.token,
   projects: (state) => state.projects,
   recentProjects: (state) => state.recentProjects,
+  recentFiles: (state) => state.recentFiles,
   files: (state) => state.files,
   lengthPages: (state) => state.lengthPages,
 };
@@ -47,12 +48,20 @@ const actions = {
           }
         });
         await commit("setProjects", res.data);
-        res = await axios.get('recent-projects/', {
+        res = await axios.get('recent/projects/', {
           headers: {
             'Authorization': `token ${access_token}` 
           }
         });
         await commit("setRecentProjects", res.data);
+
+        res = await axios.get('recent/files/', {
+          headers: {
+            'Authorization': `token ${access_token}` 
+          }
+        });
+        console.log(res.data)
+        await commit("setRecentFiles", res.data);
     }
     return result;
   },
@@ -77,6 +86,7 @@ const actions = {
     let user = null;
     commit("logout", user);
     localStorage.clear();
+    sessionStorage.clear();
   },
 
   async addProject({commit}, object){
@@ -182,11 +192,16 @@ const mutations = {
     state.recentProjects = object;
   },
 
+  setRecentFiles(state, object){
+    state.recentFiles = object;
+  },
+
   addProject(state, object){
     state.projects.push(object);
   },
 
   setFiles(state, object){
+    console.log(object)
     state.files = object;
   },
 

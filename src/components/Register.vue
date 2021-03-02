@@ -96,6 +96,7 @@ import ModalMessage from '@/components/ModalMessage.vue';
       return {
         valid: true,
         message: null,
+        text: '',
         form: {
           username: '',
           password: '',
@@ -126,6 +127,11 @@ import ModalMessage from '@/components/ModalMessage.vue';
 
     methods: {
       ...mapActions(["Register"]),
+
+      inputed () {
+        return '';
+      },
+
       async submit() {
         let values = Object.values(this.form).join('');
         if (!values){
@@ -157,5 +163,9 @@ import ModalMessage from '@/components/ModalMessage.vue';
         }, 3000)
       },
     },
+
+    computed: {
+      
+    }
   }
 </script>

@@ -4,14 +4,14 @@ export default {
   home: [],
   itemsDrawer: [
     { title: 'Home', icon: 'mdi-home', url: '/'},
-    { title: 'Proyectos', icon: 'mdi-clipboard-text', url: '/projects'},
-    { title: 'Archivos', icon: 'mdi-file', url: '/files'},
-    { title: 'Favoritos', icon: 'mdi-heart', url: '/files'},
-    { title: 'Perfil', icon: 'mdi-account', url: '/files'},
-    { title: 'Conexión API', icon: 'mdi-access-point', url: '/api-docs'},
+    { title: 'Projects', icon: 'mdi-clipboard-text', url: '/projects'},
+    { title: 'Files', icon: 'mdi-file', url: '/files'},
+    { title: 'Favorites', icon: 'mdi-heart', url: '/files'},
+    { title: 'Profile', icon: 'mdi-account', url: '/profile'},
+    { title: 'API Connection', icon: 'mdi-access-point', url: '/api-docs'},
   ],
   itemsRight: [
-    { title: 'Cerrar Sesión', icon: 'mdi-share-outline'}
+    { title: 'Out Sesion', icon: 'mdi-share-outline'}
   ]
 
 

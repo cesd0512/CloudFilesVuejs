@@ -19,7 +19,7 @@
   "sign_in": "Registrarse",
   "min_pwd": "La contraseña debe tener como mínimo 8 Caracteres",
   "reset_pwd_title": "Recuperar Contraseña",
-  "return": "Regresar",
+  "return": "Iniciar Sesión",
   "send_email": "Enviar Email",
   "change_pwd": "Cambiar Contraseña",
   "fields_empty": "Por favor diligencie todos los campos"

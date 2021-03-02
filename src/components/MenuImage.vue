@@ -4,7 +4,7 @@
           <v-img 
             :src="image"
             class="white--text align-end"
-            height="118px"
+            height="108px"
           >
           </v-img>
 
@@ -31,6 +31,7 @@
   import store from "../store";
   import axios from "axios";
   import Menu from '@/components/Menu.vue'
+  import download from 'downloadjs'
 
   export default {
     name: 'MenuImage',
@@ -96,30 +97,40 @@
         eval(EjecutarFuncion);
       },
 
+      async downloadFile() {
+
+        let access_token = store.getters.user.token;
+        await axios.get('download-file/'+ this.id +'/', {
+          headers: {
+            'Authorization': `token ${access_token}`
+          },
+          responseType: 'blob', 
+        })
+        .then(response => {
+          const content = response.headers['content-type'];
+          download(response.data, 'file', content)
+        })
+        .catch(error => console.log('------------->', error));
+      },
+
       async viewFile(){
-        if (this.url) {
-          let link = document.createElement('a');
-          let file_download = "http://localhost:8000" + this.url;
-          let fullWidth = window.screen.width;
-          let fullHeight = window.screen.height;
-          let y=parseInt(fullHeight/8);
-          let x=parseInt(fullWidth/4);
-          let width = fullWidth * (1/2);
-          if (fullWidth<600){
-            width = fullWidth;
-          }
-          let height = fullHeight * (3/4);
-          let confWindow = "width=" + width + ", height=" + height + ", screenY=" + y + " screenX=" + x;
-          window.open(file_download,  "File", confWindow);
+        // if (this.url) {
+        //   let link = document.createElement('a');
+        //   let file_download = "http://localhost:8000" + this.url;
+        //   let fullWidth = window.screen.width;
+        //   let fullHeight = window.screen.height;
+        //   let y=parseInt(fullHeight/8);
+        //   let x=parseInt(fullWidth/4);
+        //   let width = fullWidth * (1/2);
+        //   if (fullWidth<600){
+        //     width = fullWidth;
+        //   }
+        //   let height = fullHeight * (3/4);
+        //   let confWindow = "width=" + width + ", height=" + height + ", screenY=" + y + " screenX=" + x;
+        //   window.open(file_download,  "File", confWindow);
           
-          let access_token = store.getters.user.token;
-          let res = await axios.get('download-file/'+ this.id +'/', {
-            headers: {
-              'Authorization': `token ${access_token}` 
-            }
-          });
-          console.log(res)
-        }
+        // }
+        await this.downloadFile();
       },
 
       async activeButton(){

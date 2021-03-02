@@ -3,12 +3,14 @@
     <Dash app></Dash> 
 
     <v-main style="background-color:#F6F8F9; ">
-      <v-container fluid>
-        <router-view></router-view>
-      </v-container>
+      <div class="home box1">
+        <v-container fluid>
+          <router-view></router-view>
+        </v-container>
+      </div>
     </v-main>
 
-    <v-footer  
+    <v-footer
       class="font-weight-medium indigo " dark app
       >
       <v-col
@@ -18,6 +20,7 @@
         {{ new Date().getFullYear() }} — <strong>Unidades Tecnológicas de Santander</strong>
       </v-col>
     </v-footer>
+    
   </v-app>
 </template>
 
@@ -63,12 +66,18 @@ export default {
     }
     .lastLogin {
       display:none;
-      
+    }
+    .box1 {
     }
   }
    @media screen and (min-width: 601px) {    
     .large {
       margin-left: 40px
+    }
+    .box1 {
+      width: 80%;
+      margin-left:10%;
+      margin-right:10%
     }
   }
   #app {
@@ -111,6 +120,11 @@ export default {
   }
   .home {
     padding-top: 15px;
+  }
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
 </style>

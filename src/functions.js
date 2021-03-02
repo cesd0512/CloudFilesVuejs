@@ -2,6 +2,7 @@ import store from "./store";
 import router from "./router";
 import axios from "axios";
 
+
 const links = {
     pdf: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/pdf_opt_p5fh0g.png',
     word: 'https://res.cloudinary.com/cloud4files/image/upload/v1606182071/iconos%20reducidos/word_opt_dlfjsr.png',
@@ -43,6 +44,15 @@ function getImgUrl (ext) {
     return image;
 }
 
+
+function getFileName(name){
+  if (name.length > 15){
+    name = name.substr(0, 18) + '...'
+  }
+  return name;
+}
+
+
 async function setFiles (projectId) {
   var access_token = store.getters.user.token;
   let res = await axios.post('files-project/', {
@@ -57,6 +67,7 @@ async function setFiles (projectId) {
   var lengthPage = Math.round(res.data.count/pagination) + 1;
   return (files, lengthPage);
 }
+
 
 async function uploadFiles(files){
   let currentUrl = window.location.href;
@@ -83,5 +94,5 @@ async function uploadFiles(files){
 }
 
 
-export { getImgUrl, links, setFiles, uploadFiles, pagination };
+export { getImgUrl, links, setFiles, uploadFiles, pagination, getFileName };
 

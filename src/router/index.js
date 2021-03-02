@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+// import FirstPage from '../views/FirstPage.vue'
 import Login from '../views/Login.vue'
 import PasswordReset from '../views/PasswordReset.vue'
 import store from "../store";
@@ -29,6 +30,12 @@ const routes = [
     path: '/projects',
     name: 'Projects',
     component: () => import('../views/Projects.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../views/Profile.vue'),
     meta: { requiresAuth: true },
   },
   {

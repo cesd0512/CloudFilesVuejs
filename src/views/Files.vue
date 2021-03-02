@@ -1,4 +1,5 @@
 <template>
+
   <v-container class="white lighten-5 ">
   <!--<component :is="rawHtml" />-->
     <v-row>
@@ -49,14 +50,13 @@
     </v-row>
 
     <v-row
-      class="mb-12"
     >
       <v-col
         v-for="n in files"
         :key="n.id"
         cols="6"
         md="3"
-        xl="6"
+        xl="3"
         align="center"
         justify="center"
       >
@@ -119,6 +119,12 @@
         indeterminate
         size="64"
       ></v-progress-circular>
+      <!--<v-img 
+        src="loading.gif"
+        class="white--text align-end"
+        height="auto"
+      >
+      </v-img>-->
     </v-overlay>
 
   </v-container>
@@ -130,7 +136,7 @@ import ModalForm from '@/components/ModalForm.vue';
 import store from "../store";
 import { mapActions } from "vuex";
 import axios from "axios";
-import { getImgUrl, pagination } from '../functions';
+import { getImgUrl, pagination, getFileName } from '../functions';
 
 
 export default {
@@ -188,6 +194,10 @@ export default {
         return image;
       },
 
+      getFileName(name){
+        return getFileName(name);
+      },
+
       async pagPrev(){
         this.page  = 1;
         this.loadPagination();
@@ -238,13 +248,6 @@ export default {
         }
       },
 
-      getFileName(name){
-        if (name.length > 15){
-          name = name.substr(0, 18) + '...'
-        }
-        return name;
-      },
-
       execAction(action){
         var EjecutarFuncion='this.' + action + '()';
         eval(EjecutarFuncion);
@@ -282,7 +285,7 @@ export default {
           this.links = [{
                 text: 'Projects',
                 disabled: false,
-                to: '/',
+                to: '/projects',
           }]
             this.links.push(
               {

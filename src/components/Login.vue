@@ -12,14 +12,14 @@
       v-model="valid"
       lazy-validation >
         <v-text-field
-          v-model="form.username"
+          v-model="form.usernameLogin"
           :label="$t('user')"
           required
           @keyup.enter="submit()"
         ></v-text-field>
 
         <v-text-field
-          v-model="form.password"
+          v-model="form.passwordLogin"
           :label="$t('password')"
           type="password"
           required
@@ -52,10 +52,17 @@
         </v-row>
     </v-form>
     <v-overlay :value="overlay">
-      <v-progress-circular
+      <!--<v-progress-circular
         indeterminate
         size="64"
-      ></v-progress-circular>
+      ></v-progress-circular>-->
+      <v-img 
+        src="loading.gif"
+        class="white--text align-end"
+        max-height="500"
+        max-width="500"
+      >
+      </v-img>
     </v-overlay>
   </v-container>
 </template>
@@ -71,8 +78,8 @@ import Alert from '@/components/Alert';
         recovery: false,
         valid: true,
         form: {
-            username: '',
-            password: '',
+            usernameLogin: '',
+            passwordLogin: '',
         },
         message: null,
         overlay: false,
@@ -91,8 +98,8 @@ import Alert from '@/components/Alert';
         //   console.log(document.cookie);
         // }
         const User = new FormData();
-        User.append("username", this.form.username);
-        User.append("password", this.form.password);
+        User.append("username", this.form.usernameLogin);
+        User.append("password", this.form.passwordLogin);
         try {
             let res = await this.LogIn(User);
             if (res){

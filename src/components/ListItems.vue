@@ -11,7 +11,7 @@
       ></v-text-field>
     </div>
     <div v-if="scroller">
-      <Scroller :items="allItems" :height="'350'" @click="selectedItem"></Scroller>
+      <Scroller :items="allItems" :height="'500'" @click="selectedItem"></Scroller>
     </div>
 
   </v-list>

@@ -1,5 +1,4 @@
 <template>
-  <div class="home">
     <v-container class="grey lighten-5" >
       <h2>Todos los Proyectos</h2><br/>
       <br>
@@ -43,7 +42,6 @@
         </div>
       </v-row>
     </v-container>
-  </div>
 </template>
 
 <script>
@@ -124,7 +122,7 @@ export default {
       var token = store.getters.token;
       var object = {'token': token, 'projectId': item.id, 'pagination': pagination};
       await this.setFiles(object);
-      let res = await axios.post("recent-projects/", {'project': item.id}, {
+      let res = await axios.post("recent/projects/", {'project': item.id}, {
         headers: {
             'Authorization': `token ${token}` 
           }
