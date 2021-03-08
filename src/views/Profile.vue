@@ -9,7 +9,7 @@
       color="gray"
     >
       <v-card-title class="headline font-weight-regular indigo white--text">
-        Profile
+        Profile 
       </v-card-title>
       <v-img
         height="100%"
@@ -69,9 +69,6 @@
         </v-row>
       </v-img>
       <v-card-text>
-        <v-subheader class="pa-0">
-          User Data
-        </v-subheader>
         <v-form>
           <v-container>
             <v-row>
@@ -80,7 +77,7 @@
                 sm="6"
               >
                 <v-text-field
-                  v-model="first"
+                  v-model="first_name"
                   label="First Name"
                   outlined
                 ></v-text-field>
@@ -91,7 +88,7 @@
                 sm="6"
               >
                 <v-text-field
-                  v-model="last"
+                  v-model="last_name"
                   label="Last Name"
                   outlined
                 ></v-text-field>
@@ -104,8 +101,8 @@
                 sm="6"
               >
                 <v-text-field
-                  v-model="first"
-                  label="First Name"
+                  v-model="profession"
+                  label="Profession"
                   outlined
                 ></v-text-field>
               </v-col>
@@ -115,8 +112,34 @@
                 sm="6"
               >
                 <v-text-field
-                  v-model="last"
-                  label="Last Name"
+                  v-model="phone"
+                  label="Phone"
+                  outlined
+                ></v-text-field>
+              </v-col>
+
+            </v-row>
+
+            <v-row>
+              <v-col
+                cols="12"
+                sm="6"
+              >
+                <v-select
+                  :items="countries"
+                  label="Country"
+                  v-model="country"
+                  outlined
+                ></v-select>
+              </v-col>
+
+              <v-col
+                cols="12"
+                sm="6"
+              >
+                <v-text-field
+                  v-model="city"
+                  label="City"
                   outlined
                 ></v-text-field>
               </v-col>
@@ -127,23 +150,51 @@
                 cols="12"
                 sm="6"
               >
-                <v-text-field
-                  v-model="first"
-                  label="First Name"
-                  outlined
-                ></v-text-field>
+                <v-menu
+                  ref="menu"
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  :return-value.sync="date"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="auto"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="date"
+                      label="Birthday"
+                      prepend-outer-icon="mdi-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                      outlined
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="date"
+                    no-title
+                    scrollable
+                    locale="es-419"
+                  >
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="menu = false"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="$refs.menu.save(date)"
+                    >
+                      OK
+                    </v-btn>
+                  </v-date-picker>
+                </v-menu>
               </v-col>
 
-              <v-col
-                cols="12"
-                sm="6"
-              >
-                <v-text-field
-                  v-model="last"
-                  label="Last Name"
-                  outlined
-                ></v-text-field>
-              </v-col>
             </v-row>
 
             <v-row>
@@ -190,6 +241,10 @@ export default {
         overlay: false,
         url: 'https://res.cloudinary.com/cloud4files/image/upload/v1614595716/user_weradd.png',
         url_front: '',
+        countries: ['Colombia'],
+        date: new Date().toISOString().substr(0, 10),
+        menu: false,
+        modal: false,
       }
     },
 

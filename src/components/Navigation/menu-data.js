@@ -8,6 +8,7 @@ export default {
     { title: 'Files', icon: 'mdi-file', url: '/files'},
     { title: 'Favorites', icon: 'mdi-heart', url: '/files'},
     { title: 'Profile', icon: 'mdi-account', url: '/profile'},
+    { title: 'Segurity', icon: 'mdi-lock', url: '/segurity'},
     { title: 'API Connection', icon: 'mdi-access-point', url: '/api-docs'},
   ],
   itemsRight: [
