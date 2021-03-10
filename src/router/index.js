@@ -45,6 +45,12 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: '/api-connection',
+    name: 'ApiConnection',
+    component: () => import('../views/ApiConnection.vue'),
+    meta: { requiresAuth: true },
+  },
+  {
     path: '/password-reset',
     name: 'PasswordReset',
     component: PasswordReset

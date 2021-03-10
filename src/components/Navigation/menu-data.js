@@ -9,7 +9,7 @@ export default {
     { title: 'Favorites', icon: 'mdi-heart', url: '/files'},
     { title: 'Profile', icon: 'mdi-account', url: '/profile'},
     { title: 'Segurity', icon: 'mdi-lock', url: '/segurity'},
-    { title: 'API Connection', icon: 'mdi-access-point', url: '/api-docs'},
+    { title: 'API Connection', icon: 'mdi-access-point', url: '/api-connection'},
   ],
   itemsRight: [
     { title: 'Out Sesion', icon: 'mdi-share-outline'}
